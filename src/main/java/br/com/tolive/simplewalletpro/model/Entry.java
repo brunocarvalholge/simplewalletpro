@@ -24,7 +24,7 @@ public class Entry implements Serializable{
     private String description;
     private Float value;
     private int type;
-    private String category;
+    private int category;
     private String date;
     private int month;
 
@@ -60,11 +60,11 @@ public class Entry implements Serializable{
         this.type = type;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 

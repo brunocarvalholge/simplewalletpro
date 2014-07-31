@@ -7,16 +7,15 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import br.com.tolive.simplewalletpro.R;
 
 public class GraphView extends View {
+    private static final int PADDING = 50;
 
-    private Paint red;
-    private Paint yellow;
-    private Paint green;
-    RectF rectRed;
-    RectF rectYellow;
-    RectF rectGreen;
+    private ArrayList<Paint> mColors;
+    RectF rect;
 
     public GraphView(Context context) {
         this(context, null);
@@ -26,30 +25,29 @@ public class GraphView extends View {
         super(context, attrs);
         setBackgroundColor(context.getResources().getColor(R.color.snow));
 
-        red = new Paint();
-        red.setColor(getResources().getColor(R.color.red));
+        ArrayList<Paint> mColors = new ArrayList<Paint>();
 
-        yellow = new Paint();
-        yellow.setColor(getResources().getColor(R.color.yellow));
-
-        green = new Paint();
-        green.setColor(getResources().getColor(R.color.green));
-
-        //rectRed = new RectF(0, 0, getLayoutParams().width, getLayoutParams().height);
-        //rectYellow = new RectF(0, 0, getLayoutParams().width, getLayoutParams().height);
-        //rectGreen = new RectF(0, 0, getLayoutParams().width, getLayoutParams().height);
+        rect = new RectF();
 
         setFocusable(true);
     }
 
+    public void setColors(ArrayList<Paint> mColors) {
+        this.mColors = mColors;
+        this.invalidate();
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        if(right < bottom) {
-            rectRed = new RectF(left+50, top+50, right-50, right-50);
-            rectYellow = new RectF(left+50, top+25, right-50, right-75);
-        } else {
-            rectRed = new RectF(left, top, bottom, bottom);
-            rectYellow = new RectF(left, top, bottom, bottom);
+        if(changed) {
+            View view = getRootView();
+            if(view != null) {
+                if (right < bottom) {
+                    rect.set(left + PADDING, top + PADDING, right - PADDING, right - PADDING);
+                } else {
+                    rect.set(left + PADDING, top + PADDING, bottom + PADDING, bottom + PADDING);
+                }
+            }
         }
         //rectGreen = new RectF(left, top, right, bottom);
         super.onLayout(changed, left, top, right, bottom);
@@ -58,9 +56,12 @@ public class GraphView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawArc(rectRed, 0, 90, true, red);
-        canvas.drawArc(rectRed, 90, 90, true, yellow);
-        canvas.drawArc(rectYellow, 180, 180, true, green);
+        if(mColors != null) {
+            int size = mColors.size();
+            for (int i = 0; i < size; i++) {
+                canvas.drawArc(rect, 0 + 90 * i, 90, true, mColors.get(i));
+            }
+        }
         //canvas.drawCircle(100, 110, 20, red);
     }
 }

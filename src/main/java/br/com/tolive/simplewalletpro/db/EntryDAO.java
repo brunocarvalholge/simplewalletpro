@@ -14,6 +14,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
 
 public class EntryDAO {
@@ -112,7 +113,7 @@ public class EntryDAO {
             entry.setDescription(cursor.getString(cursor.getColumnIndex(Entry.DESCRIPTION)));
             entry.setValue(cursor.getFloat(cursor.getColumnIndex(Entry.VALUE)));
             entry.setType(cursor.getInt(cursor.getColumnIndex(Entry.TYPE)));
-            entry.setCategory(cursor.getString(cursor.getColumnIndex(Entry.CATEGORY)));
+            entry.setCategory(cursor.getInt(cursor.getColumnIndex(Entry.CATEGORY)));
             entry.setDate(cursor.getString(cursor.getColumnIndex(Entry.DATE)));
             entry.setMonth(cursor.getInt(cursor.getColumnIndex(Entry.MONTH)));
 
@@ -187,5 +188,36 @@ public class EntryDAO {
         }
 
         return expense;
+    }
+
+    public ArrayList<Category> getCategories() {
+        String selection = String.format("SELECT * FROM %s", Category.ENTITY_NAME);
+        String[] selectionArgs = {};
+
+        return getCategory(selection, selectionArgs);
+    }
+
+    private ArrayList<Category> getCategory(String selection, String[] selectionArgs) {
+        ArrayList<Category> categories = new ArrayList<Category>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selection, selectionArgs);
+
+        //Cursor cursor = db.query(Entry.ENTITY_NAME, Entry.ATTRIBUTES, null, null, null, null, null);
+
+        while(cursor.moveToNext()){
+            Category category = new Category();
+
+            category.setId(cursor.getLong(cursor.getColumnIndex(Category.ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(Category.NAME)));
+            category.setColor(cursor.getInt(cursor.getColumnIndex(Category.COLOR)));
+
+            categories.add(category);
+        }
+
+        cursor.close();
+        db.close();
+
+        return categories;
     }
 }

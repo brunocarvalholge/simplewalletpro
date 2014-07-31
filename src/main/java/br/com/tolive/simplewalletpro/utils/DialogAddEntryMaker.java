@@ -9,13 +9,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapter;
 import br.com.tolive.simplewalletpro.constants.Constantes;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
+import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
@@ -69,9 +73,16 @@ public class DialogAddEntryMaker {
         final RadioGroup radioGroupType = (RadioGroup) view.findViewById(R.id.dialog_add_radiogroup_type);
         final RadioButton radioGain = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_gain);
         final RadioButton radioExpense = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_expense);
+        final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
+
+        EntryDAO dao = EntryDAO.getInstance(context);
+        ArrayList<Category> categories = dao.getCategories();
+        String[] categoriesNames = getCategoriesNames(categories);
+        CustomSpinnerAdapter adapterYear = new CustomSpinnerAdapter(context, R.layout.simple_spinner_item, categoriesNames);
+        adapterYear.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapterYear);
 
         final LinearLayout containerChooseDate = (LinearLayout) view.findViewById(R.id.dialog_add_container_choose_date);
-        CustomTextView textChooseDate = (CustomTextView) view.findViewById(R.id.dialog_add_text_choose);
 
         final DatePicker datePicker = (DatePicker) view.findViewById(R.id.dialog_add_datepicker);
 
@@ -108,7 +119,7 @@ public class DialogAddEntryMaker {
                 int typeRadioButtonId = radioGroupType.getCheckedRadioButtonId();
                 int type = typeRadioButtonId == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
 
-                String category = "default";
+                int category = categorySpinner.getSelectedItemPosition();
 
                 int month;
                 String date;
@@ -171,6 +182,15 @@ public class DialogAddEntryMaker {
         return dialog.create();
     }
 
+    private String[] getCategoriesNames(ArrayList<Category> categories) {
+        ArrayList<String> names = new ArrayList<String>();
+        for(Category category : categories){
+            names.add(category.getName());
+        }
+        String[] namesList = new String[names.size()];
+        return names.toArray(namesList);
+    }
+
     private String formatToDot(String number) {
         if(number.contains(",")){
             return number.split(",")[0] + "." + number.split(",")[1];
@@ -188,15 +208,4 @@ public class DialogAddEntryMaker {
         public void onClickOk(Entry entry);
     }
 
-    /*private CustomTextView getDialogTitleView(Typeface tf) {
-        CustomTextView titleView = new CustomTextView(context);
-        titleView.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        titleView.setTypeface(tf);
-        titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, DIALOG_TITLE_SIZE);
-        titleView.setTextColor(context.getResources().getColor(R.color.snow));
-        titleView.setBackgroundColor(context.getResources().getColor(R.color.gray));
-        titleView.setText(R.string.dialog_add_title);
-        return titleView;
-    }*/
 }
