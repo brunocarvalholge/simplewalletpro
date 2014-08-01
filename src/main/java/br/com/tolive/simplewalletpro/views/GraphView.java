@@ -48,6 +48,7 @@ public class GraphView extends View {
             paint.setColor(resources.getColor(colors.getResourceId(category.getColor(), resources.getColor(R.color.gray))));
             mColors.add(paint);
         }
+        colors.recycle();
         this.invalidate();
     }
 
@@ -60,14 +61,18 @@ public class GraphView extends View {
         if(changed) {
             View view = getRootView();
             if(view != null) {
+                int extraPadding;
                 if (right < bottom) {
-                    rect.set(left + PADDING, top + PADDING, right - PADDING, right - PADDING);
+                    extraPadding = ((this.getBottom() - this.getTop()) - (this.getRight() - this.getLeft()))/2;
+                    rect.set(this.getLeft() + PADDING, this.getTop() + PADDING + extraPadding, this.getRight() - PADDING, this.getRight() - PADDING + extraPadding);
                 } else {
-                    rect.set(left + PADDING, top + PADDING, bottom + PADDING, bottom + PADDING);
+                    extraPadding = ((this.getRight() - this.getLeft()) - (this.getBottom() - this.getTop()))/2;
+                    rect.set(this.getLeft() + PADDING + extraPadding, this.getTop() + PADDING, this.getBottom() - PADDING + extraPadding, this.getBottom() - PADDING);
                 }
+                //rect.set(this.getLeft() + PADDING, this.getTop() + PADDING, this.getRight() - PADDING, this.getBottom() - PADDING);
             }
         }
-        super.onLayout(changed, left, top, right, bottom);
+        //super.onLayout(changed, left, top, right, bottom);
     }
 
     @Override

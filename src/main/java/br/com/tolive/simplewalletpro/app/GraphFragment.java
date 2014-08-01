@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import br.com.tolive.simplewalletpro.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.adapter.GraphSubListAdapter;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.views.GraphView;
@@ -37,6 +39,10 @@ public class GraphFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         ArrayList<Float> percents = dao.getPercents(categories, calendar.get(Calendar.MONTH));
         graph.setPercents(percents);
+
+        ListView sub = (ListView) view.findViewById(R.id.fragment_graph_list);
+        GraphSubListAdapter adapter = new GraphSubListAdapter(categories, percents, getActivity());
+        sub.setAdapter(adapter);
 
         return view;
     }
