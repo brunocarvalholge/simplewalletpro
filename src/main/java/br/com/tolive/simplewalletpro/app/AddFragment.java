@@ -116,16 +116,6 @@ public class AddFragment extends Fragment {
         if((gain - expense) < red){
             actionBar.setIcon(R.drawable.ic_title_red);
             color = getActivity().getResources().getColor(R.color.red);
-        } else if((gain - expense) < yellow){
-            actionBar.setIcon(R.drawable.ic_title_yellow);
-            color = getActivity().getResources().getColor(R.color.yellow);
-        } else{
-            actionBar.setIcon(R.drawable.ic_title_green);
-            color = getActivity().getResources().getColor(R.color.green);
-        }
-
-        background.setBackgroundColor(color);
-        buttonAdd.setBackgroundColor(color);
             buttonAdd.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.button_add_red));
         } else if((gain - expense) < yellow){
             actionBar.setIcon(R.drawable.ic_title_yellow);

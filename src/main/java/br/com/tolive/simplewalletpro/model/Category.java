@@ -11,6 +11,7 @@ public class Category {
 
     private Long id;
     private String name;
+    private int color;
 
     public Long getId() {
         return id;
@@ -35,6 +36,4 @@ public class Category {
     public void setColor(int color) {
         this.color = color;
     }
-
-    private int color;
 }

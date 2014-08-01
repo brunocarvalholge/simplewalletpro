@@ -24,11 +24,7 @@ public class Entry implements Serializable{
     private String description;
     private Float value;
     private int type;
-<<<<<<< HEAD
-    private String category;
-=======
     private int category;
->>>>>>> 7dacfe87cd95cb22be7f3409f617af625c8d3778
     private String date;
     private int month;
 
@@ -64,19 +60,11 @@ public class Entry implements Serializable{
         this.type = type;
     }
 
-<<<<<<< HEAD
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-=======
     public int getCategory() {
         return category;
     }
 
     public void setCategory(int category) {
->>>>>>> 7dacfe87cd95cb22be7f3409f617af625c8d3778
         this.category = category;
     }
 

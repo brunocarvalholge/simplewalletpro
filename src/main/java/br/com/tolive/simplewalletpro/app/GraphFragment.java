@@ -29,7 +29,7 @@ public class GraphFragment extends Fragment {
 
         ArrayList<Paint> colors = new ArrayList<Paint>();
         Paint color1 = new Paint();
-        color1.setColor(getResources().getColor(R.color.red));
+        color1.setColor(0xFF26a69a);
         colors.add(color1);
         Paint color2 = (new Paint());
         color2.setColor(getResources().getColor(R.color.yellow));
