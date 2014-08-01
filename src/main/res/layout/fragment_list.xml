@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/snow">
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="75dp" android:id="@+id/fragment_list_container_balance">
+
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/snow"
+            android:layout_gravity="center_vertical"
+            android:text="@string/fragment_list_text_balance"
+            />
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/snow"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:id="@+id/fragment_list_text_balance_number" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/snow"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_list_list_entries"
+        android:layout_gravity="center_horizontal"
+        />
+
+</LinearLayout>

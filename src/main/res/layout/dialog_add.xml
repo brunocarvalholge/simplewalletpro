@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/snow"
+    android:padding="5dp">
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_add_spinner_category"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/dialog_add_edittext_description"
+        android:ems="10"
+        android:id="@+id/dialog_add_edittext_description"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/dialog_add_edittext_value"
+        android:hint="@string/dialog_add_edittext_value"
+        android:layout_gravity="center_horizontal" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/dialog_add_radiogroup_type"
+        android:gravity="center">
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_radiobutton_expense"
+        android:id="@+id/dialog_add_radiobutton_expense"
+        android:checked="true"
+        android:layout_gravity="center_horizontal" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_add_radiobutton_gain"
+        android:id="@+id/dialog_add_radiobutton_gain"
+        android:layout_gravity="center_horizontal" />
+
+    </RadioGroup>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_add_datepicker"
+        android:calendarViewShown="false"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:id="@+id/dialog_add_container_choose_date"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="2dp"
+            android:background="@color/gray"
+            android:layout_gravity="center_vertical"
+            />
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="20dp"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:gravity="center_horizontal"
+            android:id="@+id/dialog_add_text_choose"
+            android:text="@string/dialog_add_text_choose"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="2dp"
+            android:background="@color/gray"
+            android:layout_gravity="center_vertical"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_more"
+            android:contentDescription="@android:string/untitled"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/snow">
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_add_text_cancel"
+            android:text="@string/dialog_add_text_cancel"
+            android:layout_margin="1dp"/>
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_add_text_ok"
+            android:text="@string/dialog_add_text_ok"
+            android:layout_margin="1dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

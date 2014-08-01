@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.tolive.simplewallet.app.SettingsActivity" >
+    
+    <item android:id="@+id/action_confirm"
+        android:title="@string/action_confirm"
+        android:icon="@drawable/ic_save"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
+</menu>

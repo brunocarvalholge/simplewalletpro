@@ -9,22 +9,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.model.Category;
 
 /**
  * Created by Bruno on 31/07/2014.
  */
 public class CustomSpinnerAdapterCategory extends ArrayAdapter<String> {
     private Context context;
-    private String[] data;
+    //private String[] data;
+    private ArrayList<Category> categories;
     LayoutInflater inflater;
 
     /*************  CustomAdapter Constructor *****************/
-    public CustomSpinnerAdapterCategory( Context context, int textViewResourceId, String[] objects) {
+    public CustomSpinnerAdapterCategory( Context context, int textViewResourceId, String[] objects, ArrayList<Category> categories) {
         super(context, textViewResourceId, objects);
         /********** Take passed values **********/
         this.context = context;
-        this.data     = objects;
+        //this.data     = objects;
+        this.categories = categories;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -46,16 +51,16 @@ public class CustomSpinnerAdapterCategory extends ArrayAdapter<String> {
 
         TypedArray colors = context.getResources()
                 .obtainTypedArray(R.array.categoryColors);
+        Category category = categories.get(position);
 
         TextView label        = (TextView) convertView.findViewById(android.R.id.text1);
+
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/" + context.getResources().getString(R.string.app_font));
         label.setTypeface(tf);
+        label.setText(category.getName());
 
-        label.setBackgroundColor(context.getResources().getColor(colors.getResourceId(position, context.getResources().getColor(R.color.gray))));
-
+        label.setBackgroundColor(context.getResources().getColor(colors.getResourceId(category.getColor(), context.getResources().getColor(R.color.gray))));
         colors.recycle();
-
-        label.setText(data[position]);
 
         return convertView;
     }
