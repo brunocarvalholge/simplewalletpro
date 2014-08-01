@@ -10,15 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Helper extends SQLiteOpenHelper {
 
     private static String mDBName = "simple_wallet";
-    private static int mVersion = 2;
+    private static int mVersion = 1;
 
-    private static final String[] DB_CREATE_SCRIPT = { "CREATE TABLE "
-            + Entry.ENTITY_NAME + " ( " + Entry.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + Entry.DESCRIPTION + " TEXT, " + Entry.VALUE + " FLOAT, " + Entry.TYPE + " INTEGER, "
-            + Entry.CATEGORY + " TEXT, " + Entry.DATE + " TEXT, " + Entry.MONTH + " INTEGER );" };
-
-    private static final String[] DB_DESTROY_SCRIPT = {"DROP TABLE IF EXISTS " + Entry.ENTITY_NAME + ";"};
-	
     private static final String[] DB_CREATE_SCRIPT = {
             "CREATE TABLE "
             + Entry.ENTITY_NAME + " ( " + Entry.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -30,8 +23,12 @@ public class Helper extends SQLiteOpenHelper {
             + Category.NAME + " TEXT, " + Category.COLOR + " INTEGER );"};
 
     private static final String[] DB_INSERT_SCRIPT = {
-            "INSERT INTO "
-                    + Category.ENTITY_NAME + " VALUES ( 0, 'teste', 1 );"};
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 0, 'Vermelho', 0 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 1, 'Rosa', 1 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 2, 'Roxo', 2 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 3, 'Indigo', 3 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 4, 'Cyan', 4 );",
+    };
 
 
     private static final String[] DB_DESTROY_SCRIPT = {"DROP TABLE IF EXISTS " + Entry.ENTITY_NAME + ";", "DROP TABLE IF EXISTS " + Category.ENTITY_NAME + ";"};

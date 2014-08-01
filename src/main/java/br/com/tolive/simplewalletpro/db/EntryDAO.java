@@ -14,10 +14,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-<<<<<<< HEAD
-=======
 import br.com.tolive.simplewalletpro.model.Category;
->>>>>>> 7dacfe87cd95cb22be7f3409f617af625c8d3778
 import br.com.tolive.simplewalletpro.model.Entry;
 
 public class EntryDAO {
@@ -116,11 +113,7 @@ public class EntryDAO {
             entry.setDescription(cursor.getString(cursor.getColumnIndex(Entry.DESCRIPTION)));
             entry.setValue(cursor.getFloat(cursor.getColumnIndex(Entry.VALUE)));
             entry.setType(cursor.getInt(cursor.getColumnIndex(Entry.TYPE)));
-<<<<<<< HEAD
-            entry.setCategory(cursor.getString(cursor.getColumnIndex(Entry.CATEGORY)));
-=======
             entry.setCategory(cursor.getInt(cursor.getColumnIndex(Entry.CATEGORY)));
->>>>>>> 7dacfe87cd95cb22be7f3409f617af625c8d3778
             entry.setDate(cursor.getString(cursor.getColumnIndex(Entry.DATE)));
             entry.setMonth(cursor.getInt(cursor.getColumnIndex(Entry.MONTH)));
 
@@ -196,8 +189,6 @@ public class EntryDAO {
 
         return expense;
     }
-<<<<<<< HEAD
-=======
 
     public ArrayList<Category> getCategories() {
         String selection = String.format("SELECT * FROM %s", Category.ENTITY_NAME);
@@ -229,5 +220,4 @@ public class EntryDAO {
 
         return categories;
     }
->>>>>>> 7dacfe87cd95cb22be7f3409f617af625c8d3778
 }
