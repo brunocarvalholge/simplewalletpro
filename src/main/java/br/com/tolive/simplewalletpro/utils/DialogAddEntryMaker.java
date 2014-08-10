@@ -2,6 +2,7 @@ package br.com.tolive.simplewalletpro.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -76,10 +77,11 @@ public class DialogAddEntryMaker {
         final RadioButton radioExpense = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_expense);
         final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
 
-        EntryDAO dao = EntryDAO.getInstance(context);
+        final EntryDAO dao = EntryDAO.getInstance(context);
         ArrayList<Category> categories = dao.getCategories();
         String[] categoriesNames = getCategoriesNames(categories);
-        CustomSpinnerAdapterCategory adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames);
+
+        CustomSpinnerAdapterCategory adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
         adapterCategory.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapterCategory);
 
@@ -120,7 +122,9 @@ public class DialogAddEntryMaker {
                 int typeRadioButtonId = radioGroupType.getCheckedRadioButtonId();
                 int type = typeRadioButtonId == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
 
-                int category = categorySpinner.getSelectedItemPosition();
+
+                String categoryName = (String) categorySpinner.getSelectedItem();
+                int category = dao.getCategoryIdByName(categoryName);
 
                 int month;
                 String date;

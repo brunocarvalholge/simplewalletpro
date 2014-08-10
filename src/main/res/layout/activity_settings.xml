@@ -1,0 +1,148 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/snow"
+    xmlns:googleads="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="vertical">
+
+            <br.com.tolive.simplewalletpro.views.CustomTextView
+                googleads:font="@string/app_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_centerVertical="true"
+                android:textSize="35dp"
+                android:id="@+id/fragment_settings_text_color_set"
+                android:text="@string/fragment_settings_text_color_set" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/gray"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="1dp"
+                android:orientation="horizontal">
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/snow"
+                    android:background="@color/green"
+                    android:layout_gravity=""
+                    android:textSize="30sp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/fragment_settings_text_color_set_green"
+                    android:text="@string/fragment_settings_text_color_set_green" />
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:id="@+id/fragment_settings_text_color_set_percent_green_number"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/snow"
+                    android:background="@color/green"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:orientation="horizontal">
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/snow"
+                    android:background="@color/yellow"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/fragment_settings_text_color_set_yellow"
+                    android:text="@string/fragment_settings_text_color_set_yellow" />
+
+                <EditText
+                    android:id="@+id/fragment_settings_edit_yellow"
+                    android:inputType="number"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal">
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/snow"
+                    android:background="@color/red"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:paddingLeft="5dp"
+                    android:id="@+id/fragment_settings_text_color_set_red"
+                    android:text="@string/fragment_settings_text_color_set_red" />
+
+                <EditText
+                    android:id="@+id/fragment_settings_edit_red"
+                    android:inputType="number"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/ad_settings"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        googleads:adSize="SMART_BANNER"
+        googleads:adUnitId="@string/admob_id"/>
+
+</LinearLayout>

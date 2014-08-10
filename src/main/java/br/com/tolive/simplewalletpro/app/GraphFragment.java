@@ -6,11 +6,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import br.com.tolive.simplewalletpro.R;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.adapter.GraphSubListAdapter;
+import br.com.tolive.simplewalletpro.db.EntryDAO;
+import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.views.GraphView;
 
 
@@ -27,18 +32,17 @@ public class GraphFragment extends Fragment {
 
         GraphView graph = (GraphView) view.findViewById(R.id.fragment_graph_graphview);
 
-        ArrayList<Paint> colors = new ArrayList<Paint>();
-        Paint color1 = new Paint();
-        color1.setColor(0xFF26a69a);
-        colors.add(color1);
-        Paint color2 = (new Paint());
-        color2.setColor(getResources().getColor(R.color.yellow));
-        colors.add(color2);
-        Paint color3 = (new Paint());
-        color3.setColor(getResources().getColor(R.color.green));
-        colors.add(color3);
+        final EntryDAO dao = EntryDAO.getInstance(getActivity());
+        ArrayList<Category> categories = dao.getCategories();
+        graph.setCategories(categories);
 
-        graph.setColors(colors);
+        Calendar calendar = Calendar.getInstance();
+        ArrayList<Float> percents = dao.getPercents(categories, calendar.get(Calendar.MONTH));
+        graph.setPercents(percents);
+
+        ListView sub = (ListView) view.findViewById(R.id.fragment_graph_list);
+        GraphSubListAdapter adapter = new GraphSubListAdapter(categories, percents, getActivity());
+        sub.setAdapter(adapter);
 
         return view;
     }

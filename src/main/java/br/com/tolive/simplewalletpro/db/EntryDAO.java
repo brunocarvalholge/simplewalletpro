@@ -9,10 +9,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
@@ -194,10 +192,10 @@ public class EntryDAO {
         String selection = String.format("SELECT * FROM %s", Category.ENTITY_NAME);
         String[] selectionArgs = {};
 
-        return getCategory(selection, selectionArgs);
+        return getCategories(selection, selectionArgs);
     }
 
-    private ArrayList<Category> getCategory(String selection, String[] selectionArgs) {
+    private synchronized ArrayList<Category> getCategories(String selection, String[] selectionArgs) {
         ArrayList<Category> categories = new ArrayList<Category>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
@@ -219,5 +217,52 @@ public class EntryDAO {
         db.close();
 
         return categories;
+    }
+
+    public int getCategoryIdByName(String categoryName) {
+        String selection = String.format("SELECT * FROM %s WHERE %s = ?", Category.ENTITY_NAME, Category.NAME);
+        String[] selectionArgs = { categoryName };
+
+        return getCategoryIdByName(selection, selectionArgs);
+    }
+
+    private synchronized int getCategoryIdByName(String selection, String[] selectionArgs) {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selection, selectionArgs);
+
+        //Cursor cursor = db.query(Entry.ENTITY_NAME, Entry.ATTRIBUTES, null, null, null, null, null);
+
+        cursor.moveToNext();
+        int id = (int) cursor.getLong(cursor.getColumnIndex(Category.ID));
+
+        cursor.close();
+        db.close();
+
+        return id;
+    }
+
+    public ArrayList<Float> getPercents(ArrayList<Category> categories, int month) {
+        ArrayList<Float> percents = new ArrayList<Float>();
+        Float total = 0f;
+        for (Category category : categories){
+            ArrayList<Entry> entries = getEntriesById(category.getId(), month);
+            Float percent = 0f;
+            for(Entry entry : entries){
+                percent += entry.getValue();
+            }
+            total += percent;
+            percents.add(percent);
+        }
+        percents.add(total);
+
+        return percents;
+    }
+
+    private ArrayList<Entry> getEntriesById(Long id, int month) {
+        String selection = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?", Entry.ENTITY_NAME, Entry.CATEGORY, Entry.MONTH);
+        String[] selectionArgs = { String.valueOf(id), String.valueOf(month) };
+
+        return getEntry(selection, selectionArgs);
     }
 }

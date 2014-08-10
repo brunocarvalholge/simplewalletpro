@@ -23,11 +23,10 @@ public class Helper extends SQLiteOpenHelper {
             + Category.NAME + " TEXT, " + Category.COLOR + " INTEGER );"};
 
     private static final String[] DB_INSERT_SCRIPT = {
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 0, 'Vermelho', 0 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 1, 'Rosa', 1 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 2, 'Roxo', 2 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 3, 'Indigo', 3 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 4, 'Cyan', 4 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 0, 'Moradia', 1 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 1, 'Alimentação', 3 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 2, 'Transporte', 8 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 3, 'Lazer', 10 );",
     };
 
 

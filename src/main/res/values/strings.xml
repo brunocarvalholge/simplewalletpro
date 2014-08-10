@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="admob_id">ca-app-pub-4943092531167782/6318527358</string>
+    <string name="app_name">Gastos Simples PRO</string>
+    <string name="app_font">RobotoCondensed-Bold.ttf</string>
+    <string name="title_activity_menu">Gastos PRO</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_filtro">Filtro</string>
+    <string name="action_confirm">Salvar</string>
+    <string name="dialog_add_title">Adicionar</string>
+    <string name="dialog_add_sucess">Despesa adicionada com sucesso</string>
+    <string name="dialog_add_error">Erro ao adicionar despesa :(</string>
+    <string name="dialog_add_no_descripition">Sem descrição</string>
+    <string name="dialog_add_invalid_value">Valor invalido</string>
+    <string name="dialog_add_radiobutton_gain">Ganho</string>
+    <string name="dialog_add_radiobutton_expense">Despesa</string>
+    <string name="dialog_add_edittext_value">Valor</string>
+    <string name="dialog_add_edittext_description">Descrição</string>
+    <string name="dialog_add_text_choose">Programar</string>
+    <string name="dialog_add_text_ok">Ok</string>
+    <string name="dialog_add_text_cancel">Cancelar</string>
+    <string name="dialog_edit_sucess">Editado com sucesso</string>
+    <string name="dialog_edit_error">Erro na edição</string>
+    <string name="activity_details_text_value_string">Quanto?</string>
+    <string name="activity_details_text_date_string">Quando?</string>
+    <string name="fragment_settings_text_color_set">Mudar avisos</string>
+    <string name="fragment_settings_text_color_set_green">Bom $$ :)</string>
+    <string name="fragment_settings_text_color_set_yellow">Atenção...</string>
+    <string name="fragment_settings_text_color_set_red">Quebrado :(</string>
+    <string name="fragment_filtro_text_date">Data</string>
+    <string name="fragment_filtro_text_date_month">Mês</string>
+    <string name="fragment_filtro_text_date_year">Ano</string>
+    <string name="fragment_about_text_more_apps">Mais aplicativos</string>
+    <string name="fragment_about_tolivehealthy_text">ToLive Healthy</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="title_activity_filtro">Filtro</string>
+    <string name="title_activity_add">Adicionar</string>
+    <string name="title_activity_details">Detalhes</string>
+    <string name="fragment_list_contextmenu_item_edit">Editar</string>
+    <string name="fragment_list_contextmenu_item_delete">Deletar</string>
+    <string name="fragment_list_text_balance">Saldo</string>
+    <string name="fragment_add_button">$</string>
+    <string name="fragment_store_text_options">Opções</string>
+    <string name="fragment_store_text_email">Enviar para email</string>
+    <string name="dialog_email_text_email">Email</string>
+    <string name="dialog_email_text_date_month">Mês</string>
+    <string name="dialog_email_text_date_year">Ano</string>
+    <string name="dialog_email_text_ok">Enviar</string>
+    <string name="dialog_email_text_cancel">Cancelar</string>
+
+    <string-array name="nav_drawer_items">
+        <item>Adicionar</item>
+        <item>Lista</item>
+        <item>Gráficos</item>
+        <item>Armazenar</item>
+        <item>Info</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_add</item>
+        <item>@drawable/ic_list</item>
+        <item>@drawable/ic_graph</item>
+        <item>@drawable/ic_store</item>
+        <item>@drawable/ic_about</item>
+    </array>
+
+    <string-array name="spinner_months">
+        <item>Jan</item>
+        <item>Fev</item>
+        <item>Mar</item>
+        <item>Abr</item>
+        <item>Mai</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ago</item>
+        <item>Set</item>
+        <item>Out</item>
+        <item>Nev</item>
+        <item>Dez</item>
+    </string-array>
+
+    <string-array name="spinner_years">
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+    </string-array>
+
+    <string-array name="spinner_email_months">
+        <item>Todos</item>
+        <item>Jan</item>
+        <item>Fev</item>
+        <item>Mar</item>
+        <item>Abr</item>
+        <item>Mai</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ago</item>
+        <item>Set</item>
+        <item>Out</item>
+        <item>Nev</item>
+        <item>Dez</item>
+    </string-array>
+
+    <string-array name="spinner_email_years">
+        <item>Todos</item>
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+    </string-array>
+
+</resources>
