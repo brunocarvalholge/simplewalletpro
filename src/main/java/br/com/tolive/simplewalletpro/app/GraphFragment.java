@@ -33,7 +33,8 @@ public class GraphFragment extends Fragment {
         GraphView graph = (GraphView) view.findViewById(R.id.fragment_graph_graphview);
 
         final EntryDAO dao = EntryDAO.getInstance(getActivity());
-        ArrayList<Category> categories = dao.getCategories();
+        //TODO : CREATE TabGroups -> 0 Expenses 1 Gain
+        ArrayList<Category> categories = dao.getCategories(0);
         graph.setCategories(categories);
 
         Calendar calendar = Calendar.getInstance();

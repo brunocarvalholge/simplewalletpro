@@ -4,16 +4,27 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import br.com.tolive.simplewalletpro.adapter.EditCategoriesExpListAdapter;
 import br.com.tolive.simplewalletpro.constants.Constantes;
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.db.EntryDAO;
+import br.com.tolive.simplewalletpro.model.Category;
+import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 
@@ -22,9 +33,15 @@ public class SettingsActivity extends Activity {
     private static final String MSG_ERROR = "O valor amarelo deve ser maior que o vermelho";
     private static final String EMPTY = "";
     private static final String ERROR_INVALID_INPUT = "Valor inválido";
-    EditText editYellow;
-    EditText editRed;
-    CustomTextView textPercentGreen;
+    public static final int EXPANDAPLE_LIST_HEADER_SIZE = 45;
+    public static final int EXPANDAPLE_LIST_CHILD_SIZE = 40;
+    private EditText editYellow;
+    private EditText editRed;
+    private CustomTextView textPercentGreen;
+    private ExpandableListView expnandableListCategories;
+    private List<String> listDataHeader;
+    private HashMap<String, List<Category>> listDataChild;
+    private int categoryListSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +67,60 @@ public class SettingsActivity extends Activity {
         editYellow.setText(String.format("%.0f",yellow));
         editRed.setText(String.format("%.0f",red));
 
+        EntryDAO dao = EntryDAO.getInstance(this);
+        expnandableListCategories = (ExpandableListView) findViewById(R.id.fragment_settings_expnandable_list_categories);
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<Category>>();
+
+        listDataHeader.add(getResources().getString(R.string.dialog_add_radiobutton_expense));
+        listDataHeader.add(getResources().getString(R.string.dialog_add_radiobutton_gain));
+
+        ArrayList<Category> expense = dao.getCategories(Entry.TYPE_EXPENSE);
+        ArrayList<Category> gain = dao.getCategories(Entry.TYPE_GAIN);
+
+        listDataChild.put(listDataHeader.get(0), expense);
+        listDataChild.put(listDataHeader.get(1), gain);
+
+        EditCategoriesExpListAdapter adapter = new EditCategoriesExpListAdapter(this, listDataHeader, listDataChild);
+
+        categoryListSize = listDataHeader.size()* EXPANDAPLE_LIST_HEADER_SIZE;
+        setListHeight();
+        expnandableListCategories.setAdapter(adapter);
+
+        expnandableListCategories.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int id) {
+                categoryListSize += listDataChild.get(listDataHeader.get(id)).size() * EXPANDAPLE_LIST_CHILD_SIZE;
+                setListHeight();
+            }
+        });
+
+        expnandableListCategories.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int id) {
+                categoryListSize -= listDataChild.get(listDataHeader.get(id)).size() * 40;
+                setListHeight();
+            }
+        });
+
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_back);
+    }
+
+    private void setListHeight() {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) expnandableListCategories.getLayoutParams();
+        DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = getDPI(categoryListSize, metrics);
+        params.height = height;
+        expnandableListCategories.setLayoutParams(params);
+    }
+
+    public static int getDPI(int size, DisplayMetrics metrics){
+        return (size * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
     }
 
     @Override
@@ -83,7 +151,7 @@ public class SettingsActivity extends Activity {
                     editor.putFloat(Constantes.SP_KEY_YELLOW, yellow);
                     editor.putFloat(Constantes.SP_KEY_RED, red);
 
-                    editor.commit();
+                    editor.apply();
 
                     setResult(RESULT_OK);
                     finish();

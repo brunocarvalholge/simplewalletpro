@@ -64,5 +64,10 @@ public class CustomSpinnerAdapterCategory extends ArrayAdapter<String> {
 
         return convertView;
     }
+
+    public void setCategories(String[] categoriesNames, ArrayList<Category> categories) {
+        this.categories = categories;
+        this.notifyDataSetChanged();
+    }
 }
 

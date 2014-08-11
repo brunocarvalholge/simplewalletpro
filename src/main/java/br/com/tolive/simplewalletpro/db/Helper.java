@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Helper extends SQLiteOpenHelper {
 
     private static String mDBName = "simple_wallet";
-    private static int mVersion = 1;
+    private static int mVersion = 2;
 
     private static final String[] DB_CREATE_SCRIPT = {
             "CREATE TABLE "
@@ -20,13 +20,15 @@ public class Helper extends SQLiteOpenHelper {
             + Entry.CATEGORY + ") REFERENCES " + Category.ENTITY_NAME + "(" + Category.ID + "));",
             "CREATE TABLE "
             + Category.ENTITY_NAME + " ( " + Category.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + Category.NAME + " TEXT, " + Category.COLOR + " INTEGER );"};
+            + Category.NAME + " TEXT, " + Category.TYPE + " INTEGER, " + Category.COLOR + " INTEGER );"};
 
     private static final String[] DB_INSERT_SCRIPT = {
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 0, 'Moradia', 1 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 1, 'Alimentação', 3 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 2, 'Transporte', 8 );",
-            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 3, 'Lazer', 10 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 0, 'Moradia', 1, 1 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 1, 'Alimentação', 1, 3 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 2, 'Transporte', 1, 8 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 3, 'Lazer', 1, 10 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 4, 'Salário', 0, 0 );",
+            "INSERT INTO " + Category.ENTITY_NAME + " VALUES ( 5, 'Extra', 0, 2 );",
     };
 
 

@@ -37,6 +37,9 @@ public class DialogAddEntryMaker {
     private OnClickOkListener mListener;
     private Context context;
     AlertDialog dialog;
+    int categoryType = Category.TYPE_EXPENSE;
+    String[] categoriesNames;
+    CustomSpinnerAdapterCategory adapterCategory;
 
     public DialogAddEntryMaker(Context context){
         this.context = context;
@@ -78,12 +81,31 @@ public class DialogAddEntryMaker {
         final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
 
         final EntryDAO dao = EntryDAO.getInstance(context);
-        ArrayList<Category> categories = dao.getCategories();
-        String[] categoriesNames = getCategoriesNames(categories);
+        ArrayList<Category> categories = dao.getCategories(categoryType);
+        categoriesNames = getCategoriesNames(categories);
 
-        CustomSpinnerAdapterCategory adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
+        if (entry != null) {
+             categoryType = entry.getType();
+        }
+
+        adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
         adapterCategory.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapterCategory);
+
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int type = i == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
+                if (categoryType != type) {
+                    categoryType = type;
+                    ArrayList<Category> categories = dao.getCategories(categoryType);
+                    categoriesNames = getCategoriesNames(categories);
+                    adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
+                    categorySpinner.setAdapter(adapterCategory);
+                }
+            }
+        });
+
 
         final LinearLayout containerChooseDate = (LinearLayout) view.findViewById(R.id.dialog_add_container_choose_date);
 
@@ -120,7 +142,7 @@ public class DialogAddEntryMaker {
                 String description = editTextDescription.getText().toString();
 
                 int typeRadioButtonId = radioGroupType.getCheckedRadioButtonId();
-                int type = typeRadioButtonId == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
+                    int type = typeRadioButtonId == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
 
 
                 String categoryName = (String) categorySpinner.getSelectedItem();

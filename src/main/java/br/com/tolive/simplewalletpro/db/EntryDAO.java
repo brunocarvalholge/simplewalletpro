@@ -188,9 +188,9 @@ public class EntryDAO {
         return expense;
     }
 
-    public ArrayList<Category> getCategories() {
-        String selection = String.format("SELECT * FROM %s", Category.ENTITY_NAME);
-        String[] selectionArgs = {};
+    public ArrayList<Category> getCategories(int type) {
+        String selection = String.format("SELECT * FROM %s WHERE %s = ?", Category.ENTITY_NAME, Category.TYPE);
+        String[] selectionArgs = { String.valueOf(type) };
 
         return getCategories(selection, selectionArgs);
     }
@@ -208,6 +208,7 @@ public class EntryDAO {
 
             category.setId(cursor.getLong(cursor.getColumnIndex(Category.ID)));
             category.setName(cursor.getString(cursor.getColumnIndex(Category.NAME)));
+            category.setType(cursor.getInt(cursor.getColumnIndex(Category.TYPE)));
             category.setColor(cursor.getInt(cursor.getColumnIndex(Category.COLOR)));
 
             categories.add(category);
@@ -246,7 +247,7 @@ public class EntryDAO {
         ArrayList<Float> percents = new ArrayList<Float>();
         Float total = 0f;
         for (Category category : categories){
-            ArrayList<Entry> entries = getEntriesById(category.getId(), month);
+            ArrayList<Entry> entries = getEntriesByCategoryId(category.getId(), month);
             Float percent = 0f;
             for(Entry entry : entries){
                 percent += entry.getValue();
@@ -259,7 +260,7 @@ public class EntryDAO {
         return percents;
     }
 
-    private ArrayList<Entry> getEntriesById(Long id, int month) {
+    private ArrayList<Entry> getEntriesByCategoryId(Long id, int month) {
         String selection = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?", Entry.ENTITY_NAME, Entry.CATEGORY, Entry.MONTH);
         String[] selectionArgs = { String.valueOf(id), String.valueOf(month) };
 
