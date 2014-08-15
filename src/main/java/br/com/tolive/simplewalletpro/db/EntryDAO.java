@@ -266,4 +266,48 @@ public class EntryDAO {
 
         return getEntry(selection, selectionArgs);
     }
+
+    public long insertCategory(Category category) {
+        ContentValues values = new ContentValues();
+
+        values.put(Category.NAME, category.getName());
+        values.put(Category.COLOR, category.getColor());
+        values.put(Category.TYPE, category.getType());
+
+        return insertCategory(values);
+    }
+
+    private synchronized long insertCategory(ContentValues values){
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        long id = db.insert(Category.ENTITY_NAME, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public long updateCategory(Category category) {
+        ContentValues values = new ContentValues();
+
+        values.put(Category.NAME, category.getName());
+        values.put(Category.COLOR, category.getColor());
+        values.put(Category.TYPE, category.getType());
+
+        String whereClause = String.format("%s=?", Entry.ID);
+        String[] whereArgs = { String.valueOf(category.getId()) };
+
+        return updateCategory(values, whereClause, whereArgs);
+    }
+
+    private synchronized long updateCategory(ContentValues values, String whereClause,
+                                     String[] whereArgs) {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        long n = db.update(Category.ENTITY_NAME, values, whereClause, whereArgs);
+
+        db.close();
+
+        return n;
+    }
 }

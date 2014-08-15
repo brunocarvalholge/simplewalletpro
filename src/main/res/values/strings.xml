@@ -24,7 +24,9 @@
     <string name="dialog_edit_error">Erro na edição</string>
     <string name="activity_details_text_value_string">Quanto?</string>
     <string name="activity_details_text_date_string">Quando?</string>
+    <string name="fragment_settings_text_add_category">Adicionar categoria</string>
     <string name="fragment_settings_text_color_set">Mudar avisos</string>
+    <string name="fragment_settings_text_create_category">Editar Categorias</string>
     <string name="fragment_settings_text_color_set_green">Bom $$ :)</string>
     <string name="fragment_settings_text_color_set_yellow">Atenção...</string>
     <string name="fragment_settings_text_color_set_red">Quebrado :(</string>
@@ -48,6 +50,14 @@
     <string name="dialog_email_text_date_year">Ano</string>
     <string name="dialog_email_text_ok">Enviar</string>
     <string name="dialog_email_text_cancel">Cancelar</string>
+    <string name="dialog_category_text_cancel">Cancelar</string>
+    <string name="dialog_category_text_ok_1">Criar</string>
+    <string name="dialog_category_text_ok_2">Modificar</string>
+    <string name="dialog_add_category_invalid_name">Nome inválido</string>
+    <string name="dialog_edit_categoty_sucess">Categoria editada</string>
+    <string name="dialog_edit_categoty_fail">Erro ao editar</string>
+    <string name="dialog_add_categoty_sucess">Categoria adicionada</string>
+    <string name="dialog_add_categoty_fail">Erro ao adicionar</string>
 
     <string-array name="nav_drawer_items">
         <item>Adicionar</item>

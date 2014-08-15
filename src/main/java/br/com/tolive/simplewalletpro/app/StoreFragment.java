@@ -61,7 +61,7 @@ public class StoreFragment extends Fragment{
                         startActivity(intent);
                     }
                 });
-                AlertDialog emailDialog = dialogEmailMaker.makeAddDialog();
+                AlertDialog emailDialog = dialogEmailMaker.makeMailDialog();
                 emailDialog.show();
             }
         });

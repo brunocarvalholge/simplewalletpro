@@ -10,8 +10,8 @@ public class Category {
     public static final String TYPE = "type";
     public static final String COLOR = "color";
 
-    public static final int TYPE_EXPENSE = 1;
     public static final int TYPE_GAIN = 0;
+    public static final int TYPE_EXPENSE = 1;
 
     //TODO : CREATE COLOR NAME CONSTANTES
 
@@ -20,8 +20,8 @@ public class Category {
     private int type;
     private int color;
 
-    public static String getType() {
-        return TYPE;
+    public int getType() {
+        return type;
     }
 
     public void setType(int type) {

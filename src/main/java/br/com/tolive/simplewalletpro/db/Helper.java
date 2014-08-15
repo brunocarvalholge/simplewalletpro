@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Helper extends SQLiteOpenHelper {
 
     private static String mDBName = "simple_wallet";
-    private static int mVersion = 2;
+    private static int mVersion = 1;
 
     private static final String[] DB_CREATE_SCRIPT = {
             "CREATE TABLE "

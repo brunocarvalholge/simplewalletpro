@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -33,7 +34,7 @@ public class SettingsActivity extends Activity {
     private static final String MSG_ERROR = "O valor amarelo deve ser maior que o vermelho";
     private static final String EMPTY = "";
     private static final String ERROR_INVALID_INPUT = "Valor inválido";
-    public static final int EXPANDAPLE_LIST_HEADER_SIZE = 45;
+    public static final int EXPANDAPLE_LIST_HEADER_SIZE = 50;
     public static final int EXPANDAPLE_LIST_CHILD_SIZE = 40;
     private EditText editYellow;
     private EditText editRed;
@@ -67,39 +68,54 @@ public class SettingsActivity extends Activity {
         editYellow.setText(String.format("%.0f",yellow));
         editRed.setText(String.format("%.0f",red));
 
-        EntryDAO dao = EntryDAO.getInstance(this);
+        final EntryDAO dao = EntryDAO.getInstance(this);
         expnandableListCategories = (ExpandableListView) findViewById(R.id.fragment_settings_expnandable_list_categories);
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<Category>>();
 
-        listDataHeader.add(getResources().getString(R.string.dialog_add_radiobutton_expense));
         listDataHeader.add(getResources().getString(R.string.dialog_add_radiobutton_gain));
+        listDataHeader.add(getResources().getString(R.string.dialog_add_radiobutton_expense));
 
         ArrayList<Category> expense = dao.getCategories(Entry.TYPE_EXPENSE);
         ArrayList<Category> gain = dao.getCategories(Entry.TYPE_GAIN);
+        Category fakeCategory_AddNew = new Category();
+        fakeCategory_AddNew.setName(getResources().getString(R.string.fragment_settings_text_add_category));
+        expense.add(fakeCategory_AddNew);
+        gain.add(fakeCategory_AddNew);
 
-        listDataChild.put(listDataHeader.get(0), expense);
-        listDataChild.put(listDataHeader.get(1), gain);
+        listDataChild.put(listDataHeader.get(0), gain);
+        listDataChild.put(listDataHeader.get(1), expense);
 
-        EditCategoriesExpListAdapter adapter = new EditCategoriesExpListAdapter(this, listDataHeader, listDataChild);
+        final DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        EditCategoriesExpListAdapter adapter = new EditCategoriesExpListAdapter(this, listDataHeader, listDataChild, metrics);
+        adapter.setOnUpdateListListener(new EditCategoriesExpListAdapter.OnUpdateListListener() {
+            @Override
+            public void onUpdate(int oldListSize, int newListSize) {
+                categoryListSize += (newListSize - oldListSize) * EXPANDAPLE_LIST_CHILD_SIZE;
+                setListHeight(metrics);
+            }
+        });
+
 
         categoryListSize = listDataHeader.size()* EXPANDAPLE_LIST_HEADER_SIZE;
-        setListHeight();
+        setListHeight(metrics);
         expnandableListCategories.setAdapter(adapter);
 
         expnandableListCategories.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int id) {
                 categoryListSize += listDataChild.get(listDataHeader.get(id)).size() * EXPANDAPLE_LIST_CHILD_SIZE;
-                setListHeight();
+                setListHeight(metrics);
             }
         });
 
         expnandableListCategories.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
             public void onGroupCollapse(int id) {
-                categoryListSize -= listDataChild.get(listDataHeader.get(id)).size() * 40;
-                setListHeight();
+                categoryListSize -= listDataChild.get(listDataHeader.get(id)).size() * EXPANDAPLE_LIST_CHILD_SIZE;
+                setListHeight(metrics);
             }
         });
 
@@ -108,11 +124,8 @@ public class SettingsActivity extends Activity {
         actionBar.setIcon(R.drawable.ic_back);
     }
 
-    private void setListHeight() {
+    private void setListHeight(DisplayMetrics metrics) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) expnandableListCategories.getLayoutParams();
-        DisplayMetrics metrics;
-        metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         int height = getDPI(categoryListSize, metrics);
         params.height = height;

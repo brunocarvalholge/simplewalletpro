@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/snow"
+    android:padding="5dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/dialog_add_edittext_description"
+        android:ems="10"
+        android:id="@+id/dialog_add_category_edittext_name"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/dialog_add_category_container_colors">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/snow">
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_add_category_text_cancel"
+            android:text="@string/dialog_category_text_cancel"
+            android:layout_margin="1dp"/>
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_add_category_text_ok"
+            android:text="@string/dialog_category_text_ok_1"
+            android:layout_margin="1dp"/>
+    </LinearLayout>
+
+</LinearLayout>

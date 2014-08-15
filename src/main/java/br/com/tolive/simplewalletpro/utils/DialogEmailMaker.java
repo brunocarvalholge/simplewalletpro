@@ -24,8 +24,8 @@ public class DialogEmailMaker {
         this.context = context;
     }
 
-    public AlertDialog makeAddDialog(){
-        this.dialog = makeCustomAddDialog();
+    public AlertDialog makeMailDialog(){
+        this.dialog = makeCustoMailDialog();
         setDialog(dialog);
         return dialog;
     }
@@ -40,7 +40,7 @@ public class DialogEmailMaker {
      *
      * @return custom AlertDialog
      */
-    private AlertDialog makeCustomAddDialog() {
+    private AlertDialog makeCustoMailDialog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

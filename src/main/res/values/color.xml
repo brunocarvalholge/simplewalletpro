@@ -34,6 +34,7 @@
     <color name="deep_purple">#673ab7</color>
     <color name="purple">#9c27b0</color>
     <color name="pink">#e91e63</color>
+    <color name="some_color">#000000</color>
     <array name="categoryColors">
         <item>@color/grey_c</item>
         <item>@color/brown</item>
@@ -50,6 +51,7 @@
         <item>@color/deep_purple</item>
         <item>@color/purple</item>
         <item>@color/pink</item>
+        <item>@color/some_color</item>
     </array>
 
 </resources>

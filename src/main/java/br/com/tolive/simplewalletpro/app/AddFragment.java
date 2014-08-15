@@ -23,17 +23,15 @@ import br.com.tolive.simplewalletpro.utils.DialogAddEntryMaker;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 public class AddFragment extends Fragment {
-    public static final String EMPTY = "";
-    public static final int DIALOG_TITLE_SIZE = 25;
 
-    ImageView buttonAdd;
-    CustomTextView textBalance;
-    CustomTextView textGain;
-    CustomTextView textExpense;
-    RelativeLayout background;
-    EntryDAO dao;
+    private ImageView buttonAdd;
+    private CustomTextView textBalance;
+    private CustomTextView textGain;
+    private CustomTextView textExpense;
+    private RelativeLayout background;
+    private EntryDAO dao;
 
-    AlertDialog dialog;
+    private AlertDialog dialog;
 
     public AddFragment(){}
 
