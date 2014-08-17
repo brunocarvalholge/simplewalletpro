@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.constants.Constantes;
 import br.com.tolive.simplewalletpro.model.NavDrawerItem;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 

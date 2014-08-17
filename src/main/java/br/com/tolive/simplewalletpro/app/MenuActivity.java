@@ -17,15 +17,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.adapter.NavDrawerListAdapter;
-import br.com.tolive.simplewalletpro.constants.Constantes;
+import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.model.NavDrawerItem;
@@ -41,7 +38,8 @@ public class MenuActivity extends ActionBarActivity {
     public static final int NAV_LIST = 1;
     public static final int NAV_GRAPH = 2;
     public static final int NAV_STORE = 3;
-    public static final int NAV_ABOUT = 4;
+    public static final int NAV_RECOVERY = 4;
+    public static final int NAV_ABOUT = 5;
     public static final int DEFAULT_VALUE = -1;
 
     private DrawerLayout mDrawerLayout;
@@ -70,13 +68,6 @@ public class MenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("E6E54B90007CAC7A62F9EC7857F3A989")
-                .build();
-        AdView adView = (AdView) findViewById(R.id.ad_main);
-        adView.loadAd(request);
-
         setActionBarIcon();
 
         mTitle = mDrawerTitle = getTitle();
@@ -102,6 +93,8 @@ public class MenuActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_GRAPH], navMenuIcons.getResourceId(NAV_GRAPH, DEFAULT_VALUE)));
         // store
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_STORE], navMenuIcons.getResourceId(NAV_STORE, DEFAULT_VALUE)));
+        // recovery
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_RECOVERY], navMenuIcons.getResourceId(NAV_RECOVERY, DEFAULT_VALUE)));
         // about
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_ABOUT], navMenuIcons.getResourceId(NAV_ABOUT, DEFAULT_VALUE)));
 
@@ -151,9 +144,9 @@ public class MenuActivity extends ActionBarActivity {
         Float gain = dao.getGain(calendar.get(Calendar.MONTH));
         Float expense = dao.getExpense(calendar.get(Calendar.MONTH));
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Constantes.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        float yellow = sharedPreferences.getFloat(Constantes.SP_KEY_YELLOW, Constantes.SP_YELLOW_DEFAULT);
-        float red = sharedPreferences.getFloat(Constantes.SP_KEY_RED, Constantes.SP_RED_DEFAULT);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);
+        float red = sharedPreferences.getFloat(Constants.SP_KEY_RED, Constants.SP_RED_DEFAULT);
 
         ActionBar actionBar = getActionBar();
 
@@ -201,6 +194,10 @@ public class MenuActivity extends ActionBarActivity {
                 break;
             case NAV_STORE:
                 fragment = new StoreFragment();
+                actionBarIcon = ICON_NONE;
+                break;
+            case NAV_RECOVERY:
+                fragment = new RecoveryFragment();
                 actionBarIcon = ICON_NONE;
                 break;
             case NAV_ABOUT:
@@ -336,13 +333,13 @@ public class MenuActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(Constantes.INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON, actionBarIcon);
+        outState.putInt(Constants.INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON, actionBarIcon);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        actionBarIcon = savedInstanceState.getInt(Constantes.INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON);
+        actionBarIcon = savedInstanceState.getInt(Constants.INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON);
     }
 }

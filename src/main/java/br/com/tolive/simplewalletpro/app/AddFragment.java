@@ -16,7 +16,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.constants.Constantes;
+import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.utils.DialogAddEntryMaker;
@@ -104,9 +104,9 @@ public class AddFragment extends Fragment {
         Float gain = dao.getGain(month);
         Float expense = dao.getExpense(month);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constantes.SHARED_PREFERENCES, Context.MODE_PRIVATE);
-        float yellow = sharedPreferences.getFloat(Constantes.SP_KEY_YELLOW, Constantes.SP_YELLOW_DEFAULT);
-        float red = sharedPreferences.getFloat(Constantes.SP_KEY_RED, Constantes.SP_RED_DEFAULT);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);
+        float red = sharedPreferences.getFloat(Constants.SP_KEY_RED, Constants.SP_RED_DEFAULT);
 
         ActionBar actionBar = getActivity().getActionBar();
 

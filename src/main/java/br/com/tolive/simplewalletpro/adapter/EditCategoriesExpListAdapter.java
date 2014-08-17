@@ -57,33 +57,33 @@ public class EditCategoriesExpListAdapter extends BaseExpandableListAdapter {
         final int type = groupPosition;
         final Category category = (Category) getChild(groupPosition, childPosition);
 
-        if (convertView == null) {
+        //if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.view_list_edit_categories, null);
-        }
+            View view = infalInflater.inflate(R.layout.view_list_edit_categories, null);
+        //}
 
         Resources resources = context.getResources();
         if(!isLastChild) {
             TypedArray colors = resources.obtainTypedArray(R.array.categoryColors);
-            convertView.setBackgroundColor(resources.getColor(colors.getResourceId(category.getColor(), resources.getColor(R.color.gray))));
+            view.setBackgroundColor(resources.getColor(colors.getResourceId(category.getColor(), resources.getColor(R.color.gray))));
             colors.recycle();
 
-            TextView txtListChild = (TextView) convertView
+            TextView txtListChild = (TextView) view
                     .findViewById(R.id.textView_list_category_name);
             txtListChild.setTextColor(resources.getColor(R.color.snow));
 
             txtListChild.setText(category.getName());
 
-            ImageView imageAdd = (ImageView) convertView
-                    .findViewById(R.id.imageView_list_category_edit);
+            //ImageView imageAdd = (ImageView) convertView
+            //        .findViewById(R.id.imageView_list_category_edit);
             //TODO : Add button ic_edit_category image
-            imageAdd.setImageDrawable(resources.getDrawable(R.drawable.button_add_old));
+            //imageAdd.setImageDrawable(resources.getDrawable(R.drawable.button_add_old));
 
-            imageAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DialogAddCategoryMaker dialogAddCategory = new DialogAddCategoryMaker(context, metrics, type);
+            //imageAdd.setOnClickListener(new View.OnClickListener() {
+            //    @Override
+            //    public void onClick(View view) {
+            /*        DialogAddCategoryMaker dialogAddCategory = new DialogAddCategoryMaker(context, metrics, type);
                     dialogAddCategory.setOnClickOkListener(new DialogAddCategoryMaker.OnClickOkListener() {
                         @Override
                         public void onClickOk(Category category, boolean isNew) {
@@ -97,30 +97,32 @@ public class EditCategoriesExpListAdapter extends BaseExpandableListAdapter {
                         }
                     });
                     dialog = dialogAddCategory.makeAddCategryDialog(category);
-                    dialog.show();
-                }
-            });
+                    dialog.show();*/
+            //   }
+            //});
         } else {
-            convertView.setBackgroundColor(resources.getColor(R.color.snow));
-            TextView txtListChild = (TextView) convertView
+            view.setBackgroundColor(resources.getColor(R.color.snow));
+            TextView txtListChild = (TextView) view
                     .findViewById(R.id.textView_list_category_name);
             txtListChild.setText(category.getName());
             txtListChild.setTextColor(resources.getColor(R.color.gray));
 
-            ImageView imageAdd = (ImageView) convertView
-                    .findViewById(R.id.imageView_list_category_edit);
+            //ImageView imageAdd = (ImageView) convertView
+            //        .findViewById(R.id.imageView_list_category_edit);
             //TODO : Add button ic_add_category image
-            imageAdd.setImageDrawable(resources.getDrawable(R.drawable.ic_add));
+            //imageAdd.setImageDrawable(resources.getDrawable(R.drawable.ic_add));
 
-            imageAdd.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DialogAddCategoryMaker dialogAddCategory = new DialogAddCategoryMaker(context, metrics, type);
                     dialogAddCategory.setOnClickOkListener(new DialogAddCategoryMaker.OnClickOkListener() {
                         @Override
                         public void onClickOk(Category category, boolean isNew) {
-                            if (dao.insertCategory(category) != -1) {
+                            long id = dao.insertCategory(category);
+                            if (id != -1) {
                                 Toast.makeText(context, R.string.dialog_add_categoty_sucess, Toast.LENGTH_SHORT).show();
+                                category.setId(id);
                                 updateList(category, type, isNew);
                             } else {
                                 Toast.makeText(context, R.string.dialog_add_categoty_fail, Toast.LENGTH_SHORT).show();
@@ -132,7 +134,7 @@ public class EditCategoriesExpListAdapter extends BaseExpandableListAdapter {
                 }
             });
         }
-        return convertView;
+        return view;
     }
 
     private void updateList(Category category, int groupPosition, boolean isNew) {
@@ -147,6 +149,11 @@ public class EditCategoriesExpListAdapter extends BaseExpandableListAdapter {
             throw new RuntimeException(e + "\nMost implement setOnUpdateListListener");
         }
         this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     public void setOnUpdateListListener (OnUpdateListListener listener){

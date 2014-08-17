@@ -19,13 +19,4 @@
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:id="@+id/textView_list_category_name" />
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/button_add_old"
-        android:id="@+id/imageView_list_category_edit"
-        android:contentDescription="@android:string/untitled"/>
-
 </LinearLayout>

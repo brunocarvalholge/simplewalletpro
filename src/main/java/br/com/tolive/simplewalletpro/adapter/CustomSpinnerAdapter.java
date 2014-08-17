@@ -1,9 +1,7 @@
 package br.com.tolive.simplewalletpro.adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.constants.Constantes;
 
 /**
  * Created by bruno.carvalho on 02/07/2014.

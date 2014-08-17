@@ -33,13 +33,6 @@ public class FiltroActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtro);
 
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("E6E54B90007CAC7A62F9EC7857F3A989")
-                .build();
-        AdView adView = (AdView) findViewById(R.id.ad_filtro);
-        adView.loadAd(request);
-
         months = getResources().getStringArray(R.array.spinner_months);
         years = getResources().getStringArray(R.array.spinner_years);
 

@@ -1,28 +1,25 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import br.com.tolive.simplewalletpro.R;
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.adapter.GraphSubListAdapter;
-import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
-import br.com.tolive.simplewalletpro.views.GraphView;
+import br.com.tolive.simplewalletpro.adapter.GraphTabAdapter;
 
 
 /**
  * Created by bruno.carvalho on 10/07/2014.
  */
 public class GraphFragment extends Fragment {
+    private GraphTabAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,20 +27,15 @@ public class GraphFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_graph, container, false);
 
-        GraphView graph = (GraphView) view.findViewById(R.id.fragment_graph_graphview);
+        ViewPager gallery = (ViewPager) view.findViewById(R.id.fragment_graph_viewpager);
 
-        final EntryDAO dao = EntryDAO.getInstance(getActivity());
-        //TODO : CREATE TabGroups -> 0 Expenses 1 Gain
-        ArrayList<Category> categories = dao.getCategories(0);
-        graph.setCategories(categories);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        ArrayList<Integer> types = new ArrayList<Integer>();
+        types.add(Category.TYPE_GAIN);
+        types.add(Category.TYPE_EXPENSE);
+        mAdapter = new GraphTabAdapter(fm, types);
 
-        Calendar calendar = Calendar.getInstance();
-        ArrayList<Float> percents = dao.getPercents(categories, calendar.get(Calendar.MONTH));
-        graph.setPercents(percents);
-
-        ListView sub = (ListView) view.findViewById(R.id.fragment_graph_list);
-        GraphSubListAdapter adapter = new GraphSubListAdapter(categories, percents, getActivity());
-        sub.setAdapter(adapter);
+        gallery.setAdapter(mAdapter);
 
         return view;
     }

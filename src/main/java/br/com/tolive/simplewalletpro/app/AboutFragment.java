@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.constants.Constantes;
-import br.com.tolive.simplewalletpro.views.CustomTextView;
+import br.com.tolive.simplewalletpro.constants.Constants;
 
 
 /**
@@ -39,7 +38,7 @@ public class AboutFragment extends Fragment {
         containerToLiveHealthy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String appPackageName = Constantes.PACKAGE_TOLIVE_HEALTHY;
+                final String appPackageName = Constants.PACKAGE_TOLIVE_HEALTHY;
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 } catch (android.content.ActivityNotFoundException anfe) {

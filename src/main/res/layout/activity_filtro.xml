@@ -106,11 +106,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.gms.ads.AdView
-    android:id="@+id/ad_filtro"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    googleads:adSize="SMART_BANNER"
-    googleads:adUnitId="@string/admob_id"/>
-
 </LinearLayout>

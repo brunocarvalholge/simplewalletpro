@@ -2,20 +2,28 @@ package br.com.tolive.simplewalletpro.app;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.utils.DialogEmailMaker;
+import br.com.tolive.simplewalletpro.utils.EntryConverter;
 
 /**
  * Created by bruno.carvalho on 10/07/2014.
@@ -66,7 +74,57 @@ public class StoreFragment extends Fragment{
             }
         });
 
+        ImageView imageSdCardStore = (ImageView) view.findViewById(R.id.fragment_store_image_sdcard);
+
+        imageSdCardStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isExternalStorageWritable()){
+                    try {
+                        File newFolder = new File(Environment.getExternalStorageDirectory(), Constants.STORE_FOLDER_NAME);
+                        if (!newFolder.exists()) {
+                            newFolder.mkdir();
+                        }
+                        try {
+                            File file = new File(newFolder, Constants.STORE_FILE_NAME);
+                            if(!file.exists()){
+                                file.createNewFile();
+                            }
+                            EntryDAO dao = EntryDAO.getInstance(getActivity());
+                            ArrayList<Entry> entries = dao.getEntry(null, null);
+                            String entriesJSON = EntryConverter.toJson(entries);
+                            FileOutputStream fos;
+                            byte[] data = entriesJSON.getBytes();
+                            try {
+                                fos = new FileOutputStream(file);
+                                fos.write(data);
+                                fos.flush();
+                                fos.close();
+                            } catch (FileNotFoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    Toast.makeText(getActivity(), "salvo no SDCard", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "erro ao abrir cartão sd", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return view;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
     private String formatEmailBody(ArrayList<Entry> entries) {

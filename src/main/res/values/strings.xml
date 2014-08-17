@@ -30,6 +30,8 @@
     <string name="fragment_settings_text_color_set_green">Bom $$ :)</string>
     <string name="fragment_settings_text_color_set_yellow">Atenção...</string>
     <string name="fragment_settings_text_color_set_red">Quebrado :(</string>
+    <string name="fragment_settings_contextmenu_item_edit">Editar</string>
+    <string name="fragment_settings_contextmenu_item_delete">Deletar</string>
     <string name="fragment_filtro_text_date">Data</string>
     <string name="fragment_filtro_text_date_month">Mês</string>
     <string name="fragment_filtro_text_date_year">Ano</string>
@@ -44,7 +46,10 @@
     <string name="fragment_list_text_balance">Saldo</string>
     <string name="fragment_add_button">$</string>
     <string name="fragment_store_text_options">Opções</string>
-    <string name="fragment_store_text_email">Enviar para email</string>
+    <string name="fragment_store_text_email">Email</string>
+    <string name="fragment_store_text_sdcard">Celular</string>
+    <string name="fragment_recovery_text_options">Opções</string>
+    <string name="fragment_recovery_text_sdcard">Celular</string>
     <string name="dialog_email_text_email">Email</string>
     <string name="dialog_email_text_date_month">Mês</string>
     <string name="dialog_email_text_date_year">Ano</string>
@@ -64,6 +69,7 @@
         <item>Lista</item>
         <item>Gráficos</item>
         <item>Armazenar</item>
+        <item>Recurperar</item>
         <item>Info</item>
     </string-array>
 
@@ -73,6 +79,7 @@
         <item>@drawable/ic_add</item>
         <item>@drawable/ic_list</item>
         <item>@drawable/ic_graph</item>
+        <item>@drawable/ic_store</item>
         <item>@drawable/ic_store</item>
         <item>@drawable/ic_about</item>
     </array>

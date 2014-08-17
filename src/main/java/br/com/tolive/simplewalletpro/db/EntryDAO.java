@@ -310,4 +310,24 @@ public class EntryDAO {
 
         return n;
     }
+
+    public long deleteAll() {
+        return delete(null, null);
+    }
+
+    public long deleteCategory(Long id){
+        String whereClause = String.format("%s=?", Category.ID);
+        String[] whereArgs = { String.valueOf(id) };
+
+        return deleteCategory(whereClause, whereArgs);
+    }
+
+    private long deleteCategory(String whereClause, String[] whereArgs) {
+
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        long id = db.delete(Category.ENTITY_NAME, whereClause, whereArgs);
+
+        return id;
+    }
 }

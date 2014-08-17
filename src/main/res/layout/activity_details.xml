@@ -6,13 +6,6 @@
     android:background="@color/snow"
     android:id="@+id/activity_details_container"
     >
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/ad_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        googleads:adSize="SMART_BANNER"
-        googleads:adUnitId="@string/admob_id"/>
 
     <View
         android:id="@+id/activity_details_divider_last"
@@ -22,7 +15,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/snow"
-        android:layout_above="@id/ad_details"/>
+        android:layout_alignParentBottom="true"/>
 
     <LinearLayout
         android:orientation="horizontal"

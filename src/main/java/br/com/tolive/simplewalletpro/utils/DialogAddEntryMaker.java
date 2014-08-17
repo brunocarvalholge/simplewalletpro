@@ -2,7 +2,6 @@ package br.com.tolive.simplewalletpro.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -17,9 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapter;
 import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapterCategory;
-import br.com.tolive.simplewalletpro.constants.Constantes;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
@@ -163,7 +160,7 @@ public class DialogAddEntryMaker {
                 if (editTextValue.getText().toString().equals(EMPTY)) {
                     Toast.makeText(context, R.string.dialog_add_invalid_value, Toast.LENGTH_SHORT).show();
                 } else {
-                    Float value = Float.parseFloat(formatToDot(editTextValue.getText().toString()));
+                    Float value = Float.parseFloat(editTextValue.getText().toString().replace(',','.'));
                     if (editTextDescription.getText().toString().equals(EMPTY)){
                         editTextDescription.setText(R.string.dialog_add_no_descripition);
                     }
@@ -217,15 +214,6 @@ public class DialogAddEntryMaker {
         String[] namesList = new String[names.size()];
         return names.toArray(namesList);
     }
-
-    private String formatToDot(String number) {
-        if(number.contains(",")){
-            return number.split(",")[0] + "." + number.split(",")[1];
-        } else {
-            return  number;
-        }
-    }
-
 
     public void setOnClickOkListener (OnClickOkListener listener){
         mListener = listener;
