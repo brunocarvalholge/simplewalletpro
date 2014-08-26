@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ public class GraphView extends View {
     private ArrayList<Category> mCategories;
     private ArrayList<Paint> mColors;
     private ArrayList<Float> mPercents;
+    private TextView mEmptyGraph;
     RectF rect;
 
     public GraphView(Context context) {
@@ -83,8 +86,8 @@ public class GraphView extends View {
             Float total = mPercents.get(mPercents.size()-1);
             Float startAng = 0f;
             for (int i = 0; i < size; i++) {
-                Float sweepAng = (mPercents.get(i)*360)/total;
-               canvas.drawArc(rect, INIT_ANG + startAng, sweepAng, true, mColors.get(i));
+                Float sweepAng = (mPercents.get(i) * 360) / total;
+                canvas.drawArc(rect, INIT_ANG + startAng, sweepAng, true, mColors.get(i));
                 startAng += sweepAng;
             }
         } catch (NullPointerException e){

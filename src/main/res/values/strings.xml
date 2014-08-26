@@ -50,6 +50,7 @@
     <string name="fragment_store_text_sdcard">Celular</string>
     <string name="fragment_recovery_text_options">Opções</string>
     <string name="fragment_recovery_text_sdcard">Celular</string>
+    <string name="fragment_graph_text_empty">Sem dados</string>
     <string name="dialog_email_text_email">Email</string>
     <string name="dialog_email_text_date_month">Mês</string>
     <string name="dialog_email_text_date_year">Ano</string>
