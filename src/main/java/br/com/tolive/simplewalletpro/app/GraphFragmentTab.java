@@ -80,7 +80,12 @@ public class GraphFragmentTab extends Fragment {
 
     private ArrayList<Category> removeZero(ArrayList<Category> categories, ArrayList<Float> percents) {
         int size = categories.size() - 1;
-        for (int i = size; i >= 0 ;i--)
+        for (int i = size; i >= 0 ;i--){
+            if(percents.get(i) == 0){
+                percents.remove(i);
+                categories.remove(i);
+            }
+        }
         return categories;
     }
 }
