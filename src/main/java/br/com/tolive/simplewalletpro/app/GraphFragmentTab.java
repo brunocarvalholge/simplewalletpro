@@ -52,7 +52,7 @@ public class GraphFragmentTab extends Fragment {
         ListView sub = (ListView) view.findViewById(R.id.fragment_graph_list);
         CustomTextView emptyGraph = (CustomTextView) view.findViewById(R.id.fragment_graph_text_empty);
 
-        //TODO : CREATE TabGroups -> 0 E;.xpenses 1 Gain
+        //TODO : CREATE category fake to hold entries with no category
         final EntryDAO dao = EntryDAO.getInstance(getActivity());
         ArrayList<Category> categories = dao.getCategories(type);
         Calendar calendar = Calendar.getInstance();

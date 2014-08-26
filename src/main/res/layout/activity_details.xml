@@ -52,13 +52,22 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/snow"
+        android:id="@+id/activity_details_divider_date"
+        android:layout_above="@id/activity_details_layout_date"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
-        android:layout_above="@id/activity_details_layout_date"
+        android:layout_above="@id/activity_details_divider_date"
         android:id="@+id/activity_details_layout_value"
         >
 
@@ -93,7 +102,45 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:background="@color/snow"
-        android:layout_above="@id/activity_details_layout_date"/>
+        android:id="@+id/activity_details_divider_value"
+        android:layout_above="@id/activity_details_layout_value"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_above="@id/activity_details_divider_value"
+        android:id="@+id/activity_details_layout_category"
+        >
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            googleads:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:textColor="@color/snow"
+            android:layout_gravity="center_vertical"
+            android:gravity="left"
+            android:text="@string/activity_details_text_category_string"
+            android:id="@+id/activity_details_text_category_string" />
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            googleads:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="25sp"
+            android:textColor="@color/snow"
+            android:layout_gravity="center_vertical"
+            android:gravity="right"
+            android:text="@string/activity_details_text_category_no_category"
+            android:id="@+id/activity_details_text_category" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/activity_details_divider_first"
@@ -102,7 +149,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:background="@color/snow"
-        android:layout_above="@id/activity_details_layout_value"/>
+        android:layout_above="@id/activity_details_layout_category"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -119,7 +166,6 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:id="@+id/activity_details_text_description"
-            android:layout_alignParentTop="true"
             />
 
     </ScrollView>

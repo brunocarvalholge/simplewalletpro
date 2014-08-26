@@ -227,6 +227,32 @@ public class EntryDAO {
         return getCategoryIdByName(selection, selectionArgs);
     }
 
+    public Category getCategory(int id) {
+        String selection = String.format("SELECT * FROM %s WHERE %s = ?", Category.ENTITY_NAME, Category.ID);
+        String[] selectionArgs = { String.valueOf(id) };
+
+        return getCategory(selection, selectionArgs);
+    }
+
+    private synchronized Category getCategory(String selection, String[] selectionArgs) {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selection, selectionArgs);
+
+        //Cursor cursor = db.query(Entry.ENTITY_NAME, Entry.ATTRIBUTES, null, null, null, null, null);
+
+        if (cursor.moveToNext()) {
+            Category category = new Category();
+            category.setId(cursor.getLong(cursor.getColumnIndex(Category.ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(Category.NAME)));
+            category.setType(cursor.getInt(cursor.getColumnIndex(Category.TYPE)));
+            category.setColor(cursor.getInt(cursor.getColumnIndex(Category.COLOR)));
+            return category;
+        } else {
+            return null;
+        }
+    }
+
     private synchronized int getCategoryIdByName(String selection, String[] selectionArgs) {
         SQLiteDatabase db = mHelper.getReadableDatabase();
 

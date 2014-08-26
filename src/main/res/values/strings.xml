@@ -22,6 +22,8 @@
     <string name="dialog_add_text_cancel">Cancelar</string>
     <string name="dialog_edit_sucess">Editado com sucesso</string>
     <string name="dialog_edit_error">Erro na edição</string>
+    <string name="activity_details_text_category_string">Categoria</string>
+    <string name="activity_details_text_category_no_category">Sem categoria</string>
     <string name="activity_details_text_value_string">Quanto?</string>
     <string name="activity_details_text_date_string">Quando?</string>
     <string name="fragment_settings_text_add_category">Adicionar categoria</string>
