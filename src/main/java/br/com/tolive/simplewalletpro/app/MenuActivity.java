@@ -216,7 +216,11 @@ public class MenuActivity extends ActionBarActivity {
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
+            if(position == NAV_GRAPH){
+                setTitle(getResources().getString(R.string.fragment_graph_text_gain));
+            }else {
+                setTitle(navMenuTitles[position]);
+            }
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment

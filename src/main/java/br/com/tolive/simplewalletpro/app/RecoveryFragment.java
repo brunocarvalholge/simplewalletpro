@@ -57,7 +57,10 @@ public class RecoveryFragment extends Fragment{
                 if(isExternalStorageReadable()) {
                     EntryDAO dao = EntryDAO.getInstance(getActivity());
                     File dir = Environment.getExternalStorageDirectory();
-                    File file = new File(dir, Constants.STORE_FOLDER_NAME + "/" + Constants.STORE_FILE_NAME);
+                    //TODO : Option to store more them 1 file
+                    String filename = Constants.STORE_FILE_NAME +
+                            Constants.STORE_FILE_EXT;
+                    File file = new File(dir, Constants.STORE_FOLDER_NAME + "/" + filename);
                     try {
                         JSONObject json = getJson(file);
                         JSONArray list = json.getJSONArray(EntryConverter.LIST);
@@ -77,11 +80,15 @@ public class RecoveryFragment extends Fragment{
 
                             dao.insert(entry);
                         }
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_recovery_text_sucess), Toast.LENGTH_SHORT).show();
                     } catch (FileNotFoundException e){
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_recovery_text_fail), Toast.LENGTH_SHORT).show();
                         throw new RuntimeException(e);
                     } catch (IOException e){
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_recovery_text_fail), Toast.LENGTH_SHORT).show();
                         throw new RuntimeException(e);
                     } catch (JSONException e){
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_recovery_text_fail), Toast.LENGTH_SHORT).show();
                         throw new RuntimeException(e);
                     }
                 }

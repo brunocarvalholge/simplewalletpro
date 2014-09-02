@@ -50,9 +50,16 @@
     <string name="fragment_store_text_options">Opções</string>
     <string name="fragment_store_text_email">Email</string>
     <string name="fragment_store_text_sdcard">Celular</string>
+    <string name="fragment_store_text_sucess">Gastos salvos no cartão SD</string>
+    <string name="fragment_store_text_fail">Erro ao salvar no cartão SD</string>
+    <string name="fragment_store_text_fail_open_SD">Erro ao abrir cartão SD</string>
     <string name="fragment_recovery_text_options">Opções</string>
     <string name="fragment_recovery_text_sdcard">Celular</string>
+    <string name="fragment_recovery_text_sucess">Dados recuperados com sucesso</string>
+    <string name="fragment_recovery_text_fail">Erro ao recuperar dados do cartão SD</string>
     <string name="fragment_graph_text_empty">Sem dados</string>
+    <string name="fragment_graph_text_gain">Ganhos</string>
+    <string name="fragment_graph_text_expense">Despesas</string>
     <string name="dialog_email_text_email">Email</string>
     <string name="dialog_email_text_date_month">Mês</string>
     <string name="dialog_email_text_date_year">Ano</string>

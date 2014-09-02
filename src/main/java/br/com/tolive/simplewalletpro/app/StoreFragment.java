@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.constants.Constants;
@@ -86,7 +88,17 @@ public class StoreFragment extends Fragment{
                             newFolder.mkdir();
                         }
                         try {
-                            File file = new File(newFolder, Constants.STORE_FILE_NAME);
+                            //Calendar calendar = Calendar.getInstance();
+                            String filename = Constants.STORE_FILE_NAME +
+                                    //TODO : Option to store more them 1 file
+                                    /*"_" +
+                                    calendar.get(Calendar.DAY_OF_MONTH) +
+                                    "_" +
+                                    (calendar.get(Calendar.MONTH) + 1) +
+                                    "_" +
+                                    calendar.get(Calendar.YEAR) +*/
+                                    Constants.STORE_FILE_EXT;
+                            File file = new File(newFolder, filename);
                             if(!file.exists()){
                                 file.createNewFile();
                             }
@@ -100,18 +112,21 @@ public class StoreFragment extends Fragment{
                                 fos.write(data);
                                 fos.flush();
                                 fos.close();
+                                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_store_text_sucess), Toast.LENGTH_SHORT).show();
                             } catch (FileNotFoundException e) {
+                                Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_store_text_fail), Toast.LENGTH_SHORT).show();
                                 throw new RuntimeException(e);
                             }
                         } catch (Exception ex) {
+                            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_store_text_fail), Toast.LENGTH_SHORT).show();
                             throw new RuntimeException(ex);
                         }
                     } catch (Exception e) {
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_store_text_fail), Toast.LENGTH_SHORT).show();
                         throw new RuntimeException(e);
                     }
-                    Toast.makeText(getActivity(), "salvo no SDCard", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "erro ao abrir cartão sd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.fragment_store_text_fail_open_SD), Toast.LENGTH_SHORT).show();
                 }
             }
         });

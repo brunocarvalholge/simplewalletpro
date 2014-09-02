@@ -16,5 +16,6 @@ public class Constants {
     public static final String INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON = "instance_save_menuactivity_actionBarIcon";
 
     public static final String STORE_FOLDER_NAME = "Gastos Simples";
-    public static final String STORE_FILE_NAME = "gastos_simples.gsp";
+    public static final String STORE_FILE_NAME = "gastos_simples";
+    public static final String STORE_FILE_EXT = ".gsp";
 }
