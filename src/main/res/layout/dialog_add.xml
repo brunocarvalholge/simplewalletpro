@@ -14,7 +14,7 @@
         android:id="@+id/dialog_add_spinner_category"
         android:layout_gravity="center_horizontal" />
 
-    <EditText
+    <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"

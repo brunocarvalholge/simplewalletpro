@@ -11,6 +11,7 @@ public class Constants {
     public static final String SP_KEY_RED = "red";
     public static final float SP_YELLOW_DEFAULT = 500;
     public static final float SP_RED_DEFAULT = 200;
+    public static final String SP_KEY_RECENT_ENTRIES = "recent_entries";
 
     public static final String PACKAGE_TOLIVE_HEALTHY = "br.gmob.tolivehealthy";
     public static final String INSTANCE_SAVE_MENUACTIVITY_ACTIONBARICON = "instance_save_menuactivity_actionBarIcon";

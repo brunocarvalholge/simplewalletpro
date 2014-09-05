@@ -2,8 +2,12 @@ package br.com.tolive.simplewalletpro.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,9 +18,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapterCategory;
+import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
@@ -33,10 +42,12 @@ public class DialogAddEntryMaker {
 
     private OnClickOkListener mListener;
     private Context context;
-    AlertDialog dialog;
-    int categoryType = Category.TYPE_EXPENSE;
-    String[] categoriesNames;
-    CustomSpinnerAdapterCategory adapterCategory;
+    private AlertDialog dialog;
+    private int categoryType = Category.TYPE_EXPENSE;
+    private String[] categoriesNames;
+    private CustomSpinnerAdapterCategory adapterCategory;
+    private Set<String> recentEntry;
+    private SharedPreferences sharedPreferences;
 
     public DialogAddEntryMaker(Context context){
         this.context = context;
@@ -66,18 +77,26 @@ public class DialogAddEntryMaker {
      */
     private AlertDialog makeCustomAddDialog(final Entry entry) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        final EntryDAO dao = EntryDAO.getInstance(context);
+        sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_add, null);
 
-        final EditText editTextDescription = (EditText) view.findViewById(R.id.dialog_add_edittext_description);
+        final AutoCompleteTextView editTextDescription = (AutoCompleteTextView) view.findViewById(R.id.dialog_add_edittext_description);
         final EditText editTextValue = (EditText) view.findViewById(R.id.dialog_add_edittext_value);
         final RadioGroup radioGroupType = (RadioGroup) view.findViewById(R.id.dialog_add_radiogroup_type);
         final RadioButton radioGain = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_gain);
         final RadioButton radioExpense = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_expense);
         final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
 
-        final EntryDAO dao = EntryDAO.getInstance(context);
+        recentEntry = sharedPreferences.getStringSet(Constants.SP_KEY_RECENT_ENTRIES, new HashSet<String>());
+        Log.d("TAG", recentEntry.toString());
+        final ArrayList<String> recentEntryList = new ArrayList<String>(recentEntry);
+        Log.d("TAG", recentEntryList.toString());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, recentEntryList);
+        editTextDescription.setAdapter(adapter);
+
         ArrayList<Category> categories = dao.getCategories(categoryType);
         categoriesNames = getCategoriesNames(categories);
 
@@ -164,6 +183,11 @@ public class DialogAddEntryMaker {
                     if (editTextDescription.getText().toString().equals(EMPTY)){
                         editTextDescription.setText(R.string.dialog_add_no_descripition);
                     }
+
+                    recentEntry.add(description);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putStringSet(Constants.SP_KEY_RECENT_ENTRIES, recentEntry);
+                    editor.commit();
 
                     if(entry == null) {
                         Entry newEntry = new Entry();
