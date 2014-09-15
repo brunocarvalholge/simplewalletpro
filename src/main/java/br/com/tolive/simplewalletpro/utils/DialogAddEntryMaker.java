@@ -16,6 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -46,7 +48,7 @@ public class DialogAddEntryMaker {
     private int categoryType = Category.TYPE_EXPENSE;
     private String[] categoriesNames;
     private CustomSpinnerAdapterCategory adapterCategory;
-    private Set<String> recentEntry;
+    private HashSet<String> recentEntry;
     private SharedPreferences sharedPreferences;
 
     public DialogAddEntryMaker(Context context){
@@ -90,11 +92,9 @@ public class DialogAddEntryMaker {
         final RadioButton radioExpense = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_expense);
         final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
 
-        recentEntry = sharedPreferences.getStringSet(Constants.SP_KEY_RECENT_ENTRIES, new HashSet<String>());
+        recentEntry = RecentEntriesConverter.fromJson(sharedPreferences.getString(Constants.SP_KEY_RECENT_ENTRIES, Constants.SP_RECENT_ENTRIES_DEFAULT));
         Log.d("TAG", recentEntry.toString());
-        final ArrayList<String> recentEntryList = new ArrayList<String>(recentEntry);
-        Log.d("TAG", recentEntryList.toString());
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, recentEntryList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(recentEntry));
         editTextDescription.setAdapter(adapter);
 
         ArrayList<Category> categories = dao.getCategories(categoryType);
@@ -186,8 +186,8 @@ public class DialogAddEntryMaker {
 
                     recentEntry.add(description);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putStringSet(Constants.SP_KEY_RECENT_ENTRIES, recentEntry);
-                    editor.commit();
+                    editor.putString(Constants.SP_KEY_RECENT_ENTRIES, RecentEntriesConverter.toJson(recentEntry));
+                    editor.apply();
 
                     if(entry == null) {
                         Entry newEntry = new Entry();

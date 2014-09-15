@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/snow"
+    android:id="@+id/Container_list_categories">
+
+
+    <br.com.tolive.simplewalletpro.views.CustomTextView
+        app:font="@string/app_font"
+        android:singleLine="true"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:textColor="@color/snow"
+        android:text="@string/textView_list_recurrent_name_add"
+        android:layout_gravity="center_vertical"
+        android:gravity="left"
+        android:textSize="30sp"
+        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:id="@+id/textView_list_recurrent_name" />
+
+    <br.com.tolive.simplewalletpro.views.CustomTextView
+        app:font="@string/app_font"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:textColor="@color/snow"
+        android:layout_gravity="center_vertical"
+        android:textSize="30sp"
+        android:gravity="right"
+        android:paddingRight="5dp"
+        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:id="@+id/textView_list_recurrent_value" />
+
+</LinearLayout>

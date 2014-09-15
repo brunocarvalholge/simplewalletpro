@@ -16,19 +16,19 @@ public class EntryConverter {
 
     public static final String LIST = "list";
 
-    public static String toJson(ArrayList<Entry> alunos) {
+    public static String toJson(ArrayList<Entry> entries) {
         try {
             JSONStringer json = new JSONStringer();
             json.object().key(LIST).array().object().key(Entry.ENTITY_NAME).array();
 
-            for (Entry aluno : alunos) {
-                json.object().key(Entry.ID).value(aluno.getId())
-                        .key(Entry.DESCRIPTION).value(aluno.getDescription())
-                        .key(Entry.VALUE).value(String.format("%.2f",aluno.getValue()))
-                        .key(Entry.TYPE).value(aluno.getType())
-                        .key(Entry.CATEGORY).value(aluno.getCategory())
-                        .key(Entry.DATE).value(aluno.getDate())
-                        .key(Entry.MONTH).value(aluno.getMonth())
+            for (Entry entry : entries) {
+                json.object().key(Entry.ID).value(entry.getId())
+                        .key(Entry.DESCRIPTION).value(entry.getDescription())
+                        .key(Entry.VALUE).value(String.format("%.2f",entry.getValue()))
+                        .key(Entry.TYPE).value(entry.getType())
+                        .key(Entry.CATEGORY).value(entry.getCategory())
+                        .key(Entry.DATE).value(entry.getDate())
+                        .key(Entry.MONTH).value(entry.getMonth())
                         .endObject();
             }
 
@@ -38,5 +38,9 @@ public class EntryConverter {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ArrayList<Entry> fromJson(String entries){
+        return null;
     }
 }

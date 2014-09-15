@@ -92,8 +92,8 @@ public class SettingsActivity extends Activity {
             public void onUpdate(int oldListSize, int newListSize) {
                 categoryListSize += (newListSize - oldListSize) * EXPANDAPLE_LIST_CHILD_SIZE;
                 setListHeight(metrics);
-                unregisterForContextMenu(expnandableListCategories);
-                registerForContextMenu(expnandableListCategories);
+                //unregisterForContextMenu(expnandableListCategories);
+                //registerForContextMenu(expnandableListCategories);
             }
         });
 

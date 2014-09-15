@@ -248,6 +248,9 @@ public class MenuActivity extends ActionBarActivity {
             case R.id.action_filtro:
                 openFiltro();
                 return true;
+            case R.id.action_recurrent:
+                openRecurrents();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -261,6 +264,11 @@ public class MenuActivity extends ActionBarActivity {
     private void openFiltro() {
         Intent intent = new Intent(MenuActivity.this, FiltroActivity.class);
         startActivityForResult(intent, REQUEST_FILTRO);
+    }
+
+    private void openRecurrents() {
+        Intent intent = new Intent(MenuActivity.this, RecurrentActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -293,18 +301,22 @@ public class MenuActivity extends ActionBarActivity {
             case ICON_SETTINGS:
                 menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
                 menu.findItem(R.id.action_filtro).setVisible(false);
+                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
             case ICON_FILTRO:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(!drawerOpen);
+                menu.findItem(R.id.action_recurrent).setVisible(!drawerOpen);
                 break;
             case ICON_NONE:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(false);
+                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
             default:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(false);
+                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);
