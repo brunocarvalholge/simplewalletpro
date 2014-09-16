@@ -64,6 +64,38 @@
         android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/dialog_add_radiogroup_recurrent"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_add_radiobutton_recurrent_no"
+            android:id="@+id/dialog_add_radiobutton_recurrent_no"
+            android:checked="true"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_add_radiobutton_recurrent_daily"
+            android:id="@+id/dialog_add_radiobutton_recurrent_daily"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_add_radiobutton_recurrent_monthly"
+            android:id="@+id/dialog_add_radiobutton_recurrent_monthly"
+            android:layout_gravity="center_horizontal" />
+
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

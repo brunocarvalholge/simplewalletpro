@@ -16,6 +16,9 @@
     <string name="dialog_add_invalid_value">Valor invalido</string>
     <string name="dialog_add_radiobutton_gain">Ganho</string>
     <string name="dialog_add_radiobutton_expense">Despesa</string>
+    <string name="dialog_add_radiobutton_recurrent_no">Normal</string>
+    <string name="dialog_add_radiobutton_recurrent_daily">Diario</string>
+    <string name="dialog_add_radiobutton_recurrent_monthly">Mensal</string>
     <string name="dialog_add_edittext_value">Valor</string>
     <string name="dialog_add_edittext_description">Descrição</string>
     <string name="dialog_add_text_choose">Programar</string>

@@ -65,7 +65,6 @@ public class RecurrentActivity extends Activity {
                     int childPosition = ExpandableListView.getPackedPositionChild(id);
 
                     selectedEntry = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
-                    Log.d("TAG", selectedEntry.toString());
                     return false;
                 }
 

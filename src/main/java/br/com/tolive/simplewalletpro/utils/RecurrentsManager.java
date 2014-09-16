@@ -2,12 +2,17 @@ package br.com.tolive.simplewalletpro.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.util.ArrayList;
 
+import br.com.tolive.simplewalletpro.R;
+import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.model.Entry;
 
 /**
@@ -22,52 +27,39 @@ public class RecurrentsManager {
 
     public RecurrentsManager(Context context){
         this.context = context;
+        this.sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     public ArrayList<Entry> getRecurrentDaily(){
-        ArrayList<Entry> recurrentDaily = new ArrayList<Entry>();
-        Entry teste = new Entry();
-        teste.setDescription("TesteD1");
-        teste.setValue(new Float(10));
-        teste.setCategory(0);
-        teste.setDate("0/0/0");
-        teste.setType(0);
-        recurrentDaily.add(teste);
-        Entry teste2 = new Entry();
-        teste2.setDescription("TesteD2");
-        teste2.setValue(new Float(10));
-        teste2.setCategory(0);
-        teste2.setDate("0/0/0");
-        teste2.setType(1);
-        recurrentDaily.add(teste2);
-        return recurrentDaily;
+        String jRecurrentDaily = sharedPreferences.getString(Constants.SP_KEY_RECURRENT_DAILY, Constants.SP_RECURRENT_DAILY_DEFAULT);
+        if(jRecurrentDaily.equals(Constants.SP_RECURRENT_DAILY_DEFAULT)){
+            return new ArrayList<Entry>();
+        } else {
+            return fromJson(jRecurrentDaily);
+        }
     }
 
     public ArrayList<Entry> getRecurrentMonthly(){
-        ArrayList<Entry> recurrentMothly = new ArrayList<Entry>();
-        Entry teste = new Entry();
-        teste.setDescription("TesteM1");
-        teste.setValue(new Float(100));
-        teste.setCategory(0);
-        teste.setDate("0/0/0");
-        teste.setType(0);
-        recurrentMothly.add(teste);
-        Entry teste2 = new Entry();
-        teste2.setDescription("TesteM2");
-        teste2.setValue(new Float(100));
-        teste2.setCategory(0);
-        teste2.setDate("0/0/0");
-        teste2.setType(1);
-        recurrentMothly.add(teste2);
-        return recurrentMothly;
+        String jRecurrentMonthly = sharedPreferences.getString(Constants.SP_KEY_RECURRENT_MONTHLY, Constants.SP_RECURRENT_MONTHLY_DEFAULT);
+        if(jRecurrentMonthly.equals(Constants.SP_RECURRENT_MONTHLY_DEFAULT)){
+            return new ArrayList<Entry>();
+        } else {
+            return fromJson(jRecurrentMonthly);
+        }
     }
 
     public void saveRecurrentDaily(ArrayList<Entry> recurrentsDaily){
-
+        String json = toJson(recurrentsDaily);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.SP_KEY_RECURRENT_DAILY, json);
+        editor.apply();
     }
 
     public void saveRecurrentMonthly(ArrayList<Entry> recurrentsMonthly){
-
+        String json = toJson(recurrentsMonthly);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.SP_KEY_RECURRENT_MONTHLY, json);
+        editor.apply();
     }
 
     private static String toJson(ArrayList<Entry> entries) {
@@ -94,7 +86,30 @@ public class RecurrentsManager {
         }
     }
 
-    private static ArrayList<Entry> fromJson(String entries){
-        return null;
+    private static ArrayList<Entry> fromJson(String jEntries){
+        ArrayList<Entry> recurrentList = new ArrayList<Entry>();
+        try {
+            JSONObject json = new JSONObject(jEntries);
+            JSONArray list = json.getJSONArray(EntryConverter.LIST);
+            JSONArray entries = list.getJSONObject(0).getJSONArray(Entry.ENTITY_NAME);
+            for(int i = 0; !entries.isNull(i); i++){
+                Entry entry = new Entry();
+                JSONObject jEntry = entries.getJSONObject(i);
+
+                entry.setId(jEntry.getLong(Entry.ID));
+                entry.setDescription(jEntry.getString(Entry.DESCRIPTION));
+                entry.setValue(Float.parseFloat(jEntry.getString(Entry.VALUE).replace(',','.')));
+                entry.setType(jEntry.getInt(Entry.TYPE));
+                entry.setCategory(jEntry.getInt(Entry.CATEGORY));
+                entry.setDate(jEntry.getString(Entry.DATE));
+                entry.setMonth(jEntry.getInt(Entry.MONTH));
+
+                recurrentList.add(entry);
+            }
+            //Toast.makeText(this.context, this.context.getResources().getString(R.string.fragment_recovery_text_sucess), Toast.LENGTH_SHORT).show();
+        } catch (JSONException e){
+            throw new RuntimeException(e);
+        }
+        return recurrentList;
     }
 }
