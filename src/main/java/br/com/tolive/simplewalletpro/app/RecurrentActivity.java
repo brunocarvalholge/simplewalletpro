@@ -2,6 +2,8 @@ package br.com.tolive.simplewalletpro.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +24,7 @@ import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.adapter.EditCategoriesExpListAdapter;
 import br.com.tolive.simplewalletpro.adapter.RecurrentExpListAdapter;
 import br.com.tolive.simplewalletpro.model.Entry;
+import br.com.tolive.simplewalletpro.utils.DialogAddEntryMaker;
 import br.com.tolive.simplewalletpro.utils.RecurrentsManager;
 
 public class RecurrentActivity extends Activity {
@@ -150,6 +153,8 @@ public class RecurrentActivity extends Activity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        final RecurrentsManager recurrentsManager = new RecurrentsManager(this);
+        final Resources resources = this.getResources();
 
         Log.d("TAG", "ContextMenu");
 
@@ -176,7 +181,22 @@ public class RecurrentActivity extends Activity {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    Toast.makeText(RecurrentActivity.this, "edit: " + selectedEntry.toString(), Toast.LENGTH_SHORT).show();
+                    DialogAddEntryMaker dialogAddEntryMaker = new DialogAddEntryMaker(RecurrentActivity.this);
+                    dialogAddEntryMaker.setOnClickOkListener(new DialogAddEntryMaker.OnClickOkListener() {
+                        @Override
+                        public void onClickOk(Entry entry, int recurrency) {
+                            recurrentsManager.edit(entry, recurrency);
+                            if(entry.getType() == Entry.TYPE_GAIN) {
+                                Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_edit_sucess_gain), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_edit_sucess_expense), Toast.LENGTH_SHORT).show();
+                            }
+                            refresh(groupPosition);
+                        }
+                    });
+                    AlertDialog dialog = dialogAddEntryMaker.makeAddDialog(selectedEntry);
+                    dialog.show();
+
                     return false;
                 }
             });
@@ -186,10 +206,30 @@ public class RecurrentActivity extends Activity {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    Toast.makeText(RecurrentActivity.this, "delete: " + selectedEntry.toString(), Toast.LENGTH_SHORT).show();
+                    recurrentsManager.remove(selectedEntry);
+                    refresh(groupPosition);
+                    if(selectedEntry.getType() == Entry.TYPE_GAIN) {
+                        Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_remove_sucess_gain), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_remove_sucess_expense), Toast.LENGTH_SHORT).show();
+                    }
                     return false;
                 }
             });
         }
+    }
+
+    private void refresh(int groupPosition) {
+        RecurrentsManager recurrentsManager = new RecurrentsManager(this);
+        if(groupPosition == 0) {
+            listDataChild.remove(listDataHeader.get(0));
+            listDataChild.put(listDataHeader.get(0), recurrentsManager.getRecurrentDaily());
+            adapter.setListDataChild(listDataChild);
+        } else if(groupPosition == 1 ){
+            listDataChild.remove(listDataHeader.get(1));
+            listDataChild.put(listDataHeader.get(1), recurrentsManager.getRecurrentMonthly());
+            adapter.setListDataChild(listDataChild);
+        }
+        adapter.notifyDataSetChanged();
     }
 }

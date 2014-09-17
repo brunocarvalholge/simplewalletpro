@@ -20,6 +20,7 @@ import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.utils.DialogAddEntryMaker;
+import br.com.tolive.simplewalletpro.utils.RecurrentsManager;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 public class AddFragment extends Fragment {
@@ -30,6 +31,7 @@ public class AddFragment extends Fragment {
     private CustomTextView textExpense;
     private RelativeLayout background;
     private EntryDAO dao;
+    private RecurrentsManager recurrentsManager;
 
     private AlertDialog dialog;
 
@@ -42,6 +44,7 @@ public class AddFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_add, container, false);
 
         dao = EntryDAO.getInstance(getActivity());
+        recurrentsManager = new RecurrentsManager(getActivity());
 
         buttonAdd = (ImageView) rootView.findViewById(R.id.fragment_add_button_add);
         textBalance = (CustomTextView) rootView.findViewById(R.id.fragment_add_text_balance);
@@ -62,8 +65,11 @@ public class AddFragment extends Fragment {
                 DialogAddEntryMaker dialogAddEntryMaker = new DialogAddEntryMaker(getActivity());
                 dialogAddEntryMaker.setOnClickOkListener(new DialogAddEntryMaker.OnClickOkListener() {
                     @Override
-                    public void onClickOk(Entry entry) {
-                        if (dao.insert(entry) != -1) {
+                    public void onClickOk(Entry entry, int recurrency) {
+                        long id = dao.insert(entry);
+                        if (id != -1) {
+                            entry.setId(id);
+                            recurrentsManager.insert(entry, recurrency);
                             Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
                             refreshBackGround(entry.getMonth());
                             refreshBalanceText(entry.getMonth());

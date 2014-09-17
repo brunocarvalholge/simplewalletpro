@@ -81,6 +81,10 @@
     <string name="activity_recurrent_text">Gastos recorrentes</string>
     <string name="activity_recurrent_text_daily">Diario</string>
     <string name="activity_recurrent_text_monthly">Mensal</string>
+    <string name="activity_recurrent_text_edit_sucess_gain">Ganho recorrente editado com sucesso</string>
+    <string name="activity_recurrent_text_remove_sucess_gain">Ganho recorrente removido com sucesso</string>
+    <string name="activity_recurrent_text_edit_sucess_expense">Gasto recorrente editado com sucesso</string>
+    <string name="activity_recurrent_text_remove_sucess_expense">Gasto recorrente removido com sucesso</string>
     <string name="textView_list_recurrent_name_add">Adicionar</string>
 
     <string-array name="nav_drawer_items">

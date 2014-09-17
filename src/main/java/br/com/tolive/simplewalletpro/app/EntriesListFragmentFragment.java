@@ -139,7 +139,7 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
                 DialogAddEntryMaker dialogAddEntryMaker = new DialogAddEntryMaker(getActivity());
                 dialogAddEntryMaker.setOnClickOkListener(new DialogAddEntryMaker.OnClickOkListener() {
                     @Override
-                    public void onClickOk(Entry entry) {
+                    public void onClickOk(Entry entry, int recurrency) {
                         if (dao.update(entry) > NO_ROWS_AFFECTED) {
                             Toast.makeText(getActivity(), R.string.dialog_edit_sucess, Toast.LENGTH_SHORT).show();
                             if (prevMonth != entry.getMonth() || prevYear != Integer.valueOf(entry.getDate().split("/")[DATE_YEAR])) {

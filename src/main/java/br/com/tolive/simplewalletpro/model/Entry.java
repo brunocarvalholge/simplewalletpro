@@ -96,4 +96,17 @@ public class Entry implements Serializable{
                 ", month=" + month +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean sameSame = false;
+
+        if (object != null && object instanceof Entry) {
+            sameSame = (this.getId() == ((Entry) object).getId());
+        }
+
+        return sameSame;
+    }
+
+    //Maybe need to override hashcode metod
 }

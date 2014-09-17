@@ -80,11 +80,15 @@ public class DialogAddEntryMaker {
     private AlertDialog makeCustomAddDialog(final Entry entry) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final EntryDAO dao = EntryDAO.getInstance(context);
+        final RecurrentsManager recurrentsManager = new RecurrentsManager(context);
         sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_add, null);
 
+        ////
+        //Views instantion
+        ////
         final AutoCompleteTextView editTextDescription = (AutoCompleteTextView) view.findViewById(R.id.dialog_add_edittext_description);
         final EditText editTextValue = (EditText) view.findViewById(R.id.dialog_add_edittext_value);
         final RadioGroup radioGroupType = (RadioGroup) view.findViewById(R.id.dialog_add_radiogroup_type);
@@ -92,11 +96,17 @@ public class DialogAddEntryMaker {
         final RadioButton radioExpense = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_expense);
         final Spinner categorySpinner = (Spinner) view.findViewById(R.id.dialog_add_spinner_category);
 
+        ////
+        //Get recent entries saved in SharedPreferences
+        ////
         recentEntry = RecentEntriesConverter.fromJson(sharedPreferences.getString(Constants.SP_KEY_RECENT_ENTRIES, Constants.SP_RECENT_ENTRIES_DEFAULT));
         Log.d("TAG", recentEntry.toString());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(recentEntry));
         editTextDescription.setAdapter(adapter);
 
+        ////
+        //Setting Category
+        ///
         ArrayList<Category> categories = dao.getCategories(categoryType);
         categoriesNames = getCategoriesNames(categories);
 
@@ -126,11 +136,16 @@ public class DialogAddEntryMaker {
         final LinearLayout containerChooseDate = (LinearLayout) view.findViewById(R.id.dialog_add_container_choose_date);
 
         final DatePicker datePicker = (DatePicker) view.findViewById(R.id.dialog_add_datepicker);
+        final RadioGroup radioGroupRecurrent = (RadioGroup) view.findViewById(R.id.dialog_add_radiogroup_recurrent);
+        final RadioButton radioNormal = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_recurrent_no);
+        final RadioButton radioDaily = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_recurrent_daily);
+        final RadioButton radioMonthly = (RadioButton) view.findViewById(R.id.dialog_add_radiobutton_recurrent_monthly);
 
         containerChooseDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 datePicker.setVisibility(View.VISIBLE);
+                radioGroupRecurrent.setVisibility(View.VISIBLE);
                 containerChooseDate.setVisibility(View.GONE);
             }
         });
@@ -150,6 +165,17 @@ public class DialogAddEntryMaker {
             }
             String[] split = entry.getDate().split("/");
             datePicker.updateDate(Integer.valueOf(split[DATE_YEAR]), Integer.valueOf(split[DATE_MONTH]) - 1, Integer.valueOf(split[DATE_DAY]));
+            switch (recurrentsManager.getRecurrency(entry)){
+                case RecurrentsManager.RECURRENT_NORMAL:
+                    radioNormal.setChecked(true);
+                    break;
+                case RecurrentsManager.RECURRENT_DAILY:
+                    radioDaily.setChecked(true);
+                    break;
+                case RecurrentsManager.RECURRENT_MONTHY:
+                    radioMonthly.setChecked(true);
+                    break;
+            }
         }
 
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +202,20 @@ public class DialogAddEntryMaker {
                     date = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (month + 1) + "/" + calendar.get(Calendar.YEAR);
                 }
 
+                int recurrentChekedRadioButtonId = radioGroupRecurrent.getCheckedRadioButtonId();
+                int recurrency = RecurrentsManager.RECURRENT_NORMAL;
+                switch (recurrentChekedRadioButtonId){
+                    case R.id.dialog_add_radiobutton_recurrent_no:
+                        recurrency = RecurrentsManager.RECURRENT_NORMAL;
+                        break;
+                    case R.id.dialog_add_radiobutton_recurrent_daily:
+                        recurrency = RecurrentsManager.RECURRENT_DAILY;
+                        break;
+                    case R.id.dialog_add_radiobutton_recurrent_monthly:
+                        recurrency = RecurrentsManager.RECURRENT_MONTHY;
+                        break;
+                }
+
                 if (editTextValue.getText().toString().equals(EMPTY)) {
                     Toast.makeText(context, R.string.dialog_add_invalid_value, Toast.LENGTH_SHORT).show();
                 } else {
@@ -199,7 +239,7 @@ public class DialogAddEntryMaker {
                         newEntry.setMonth(month);
 
                         if (mListener != null) {
-                            mListener.onClickOk(newEntry);
+                            mListener.onClickOk(newEntry, recurrency);
                             DialogAddEntryMaker.this.dialog.dismiss();
                         }
                     } else{
@@ -211,7 +251,7 @@ public class DialogAddEntryMaker {
                         entry.setMonth(month);
 
                         if (mListener != null) {
-                            mListener.onClickOk(entry);
+                            mListener.onClickOk(entry, recurrency);
                             DialogAddEntryMaker.this.dialog.dismiss();
                         }
                     }
@@ -244,6 +284,6 @@ public class DialogAddEntryMaker {
     }
 
     public interface OnClickOkListener {
-        public void onClickOk(Entry entry);
+        public void onClickOk(Entry entry, int recurrency);
     }
 }

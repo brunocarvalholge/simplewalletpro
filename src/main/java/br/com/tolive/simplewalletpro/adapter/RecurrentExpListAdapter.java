@@ -152,4 +152,12 @@ public class RecurrentExpListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+    public void setListDataHeader(List<String> listDataHeader) {
+        this.listDataHeader = listDataHeader;
+    }
+
+    public void setListDataChild(HashMap<String, List<Entry>> listDataChild) {
+        this.listDataChild = listDataChild;
+    }
 }
