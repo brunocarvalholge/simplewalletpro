@@ -3,6 +3,7 @@ package br.com.tolive.simplewalletpro.adapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,15 @@ import br.com.tolive.simplewalletpro.model.Category;
 /**
  * Created by Bruno on 31/07/2014.
  */
-public class CustomSpinnerAdapterCategory extends ArrayAdapter<String> {
+public class CustomSpinnerAdapterCategory extends ArrayAdapter<Category> {
     private Context context;
-    //private String[] data;
+    //private ArrayList<Category> data;
     private ArrayList<Category> categories;
     LayoutInflater inflater;
 
     /*************  CustomAdapter Constructor *****************/
-    public CustomSpinnerAdapterCategory( Context context, int textViewResourceId, String[] objects, ArrayList<Category> categories) {
-        super(context, textViewResourceId, objects);
+    public CustomSpinnerAdapterCategory( Context context, int textViewResourceId, ArrayList<Category> categories) {
+        super(context, textViewResourceId, categories);
         /********** Take passed values **********/
         this.context = context;
         //this.data     = objects;
@@ -65,7 +66,12 @@ public class CustomSpinnerAdapterCategory extends ArrayAdapter<String> {
         return convertView;
     }
 
-    public void setCategories(String[] categoriesNames, ArrayList<Category> categories) {
+    @Override
+    public int getPosition(Category item) {
+        return categories.indexOf(item);
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
         this.notifyDataSetChanged();
     }

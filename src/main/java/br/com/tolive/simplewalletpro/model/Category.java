@@ -51,4 +51,14 @@ public class Category {
     public void setColor(int color) {
         this.color = color;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", color=" + color +
+                '}';
+    }
 }

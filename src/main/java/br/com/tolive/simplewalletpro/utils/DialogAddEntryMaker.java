@@ -19,6 +19,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
@@ -107,16 +108,19 @@ public class DialogAddEntryMaker {
         ////
         //Setting Category
         ///
+        if (entry != null) {
+            categoryType = entry.getType();
+        }
         ArrayList<Category> categories = dao.getCategories(categoryType);
         categoriesNames = getCategoriesNames(categories);
 
-        if (entry != null) {
-             categoryType = entry.getType();
-        }
-
-        adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
+        adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categories);
         adapterCategory.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapterCategory);
+
+        if(entry != null){
+            categorySpinner.setSelection(getSelectedCategory(categories, entry.getCategory()));
+        }
 
         radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -126,7 +130,7 @@ public class DialogAddEntryMaker {
                     categoryType = type;
                     ArrayList<Category> categories = dao.getCategories(categoryType);
                     categoriesNames = getCategoriesNames(categories);
-                    adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categoriesNames, categories);
+                    adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categories);
                     categorySpinner.setAdapter(adapterCategory);
                 }
             }
@@ -186,9 +190,7 @@ public class DialogAddEntryMaker {
                 int typeRadioButtonId = radioGroupType.getCheckedRadioButtonId();
                     int type = typeRadioButtonId == R.id.dialog_add_radiobutton_expense ? Entry.TYPE_EXPENSE : Entry.TYPE_GAIN;
 
-
-                String categoryName = (String) categorySpinner.getSelectedItem();
-                int category = dao.getCategoryIdByName(categoryName);
+                int category = ((Category) categorySpinner.getSelectedItem()).getId().intValue();
 
                 int month;
                 String date;
@@ -268,6 +270,17 @@ public class DialogAddEntryMaker {
 
         dialog.setView(view);
         return dialog.create();
+    }
+
+    private int getSelectedCategory(ArrayList<Category> categories, int categoryId) {
+        int size = categories.size();
+        for (int i = 0 ; i < size ; i++){
+            Long currentId = categories.get(i).getId();
+            if(currentId == categoryId){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private String[] getCategoriesNames(ArrayList<Category> categories) {
