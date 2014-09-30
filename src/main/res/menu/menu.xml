@@ -17,11 +17,4 @@
         android:visible="false"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_recurrent"
-        android:title="@string/action_recurrent"
-        android:icon="@drawable/ic_list"
-        android:orderInCategory="100"
-        android:visible="false"
-        app:showAsAction="always" />
-
 </menu>

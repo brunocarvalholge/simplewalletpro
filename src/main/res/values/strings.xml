@@ -90,6 +90,7 @@
     <string-array name="nav_drawer_items">
         <item>Adicionar</item>
         <item>Lista</item>
+        <item>Recorrentes</item>
         <item>Gráficos</item>
         <item>Armazenar</item>
         <item>Recurperar</item>
@@ -100,6 +101,7 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_add</item>
+        <item>@drawable/ic_list</item>
         <item>@drawable/ic_list</item>
         <item>@drawable/ic_graph</item>
         <item>@drawable/ic_store</item>

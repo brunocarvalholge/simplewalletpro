@@ -36,10 +36,11 @@ public class MenuActivity extends ActionBarActivity {
     private static final int REQUEST_FILTRO = 1;
     public static final int NAV_ADD = 0;
     public static final int NAV_LIST = 1;
-    public static final int NAV_GRAPH = 2;
-    public static final int NAV_STORE = 3;
-    public static final int NAV_RECOVERY = 4;
-    public static final int NAV_ABOUT = 5;
+    public static final int NAV_RECURRENT = 2;
+    public static final int NAV_GRAPH = 3;
+    public static final int NAV_STORE = 4;
+    public static final int NAV_RECOVERY = 5;
+    public static final int NAV_ABOUT = 6;
     public static final int DEFAULT_VALUE = -1;
 
     private DrawerLayout mDrawerLayout;
@@ -89,6 +90,8 @@ public class MenuActivity extends ActionBarActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_ADD], navMenuIcons.getResourceId(NAV_ADD, DEFAULT_VALUE)));
         // list
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_LIST], navMenuIcons.getResourceId(NAV_LIST, DEFAULT_VALUE)));
+        // list
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_RECURRENT], navMenuIcons.getResourceId(NAV_RECURRENT, DEFAULT_VALUE)));
         // graph
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[NAV_GRAPH], navMenuIcons.getResourceId(NAV_GRAPH, DEFAULT_VALUE)));
         // store
@@ -188,6 +191,10 @@ public class MenuActivity extends ActionBarActivity {
                 mListener = (OnFiltroApplyListener) fragment;
                 actionBarIcon = ICON_FILTRO;
                 break;
+            case NAV_RECURRENT:
+                fragment = new RecurrentFragment();
+                actionBarIcon = ICON_NONE;
+                break;
             case NAV_GRAPH:
                 fragment = new GraphFragment();
                 actionBarIcon = ICON_NONE;
@@ -248,9 +255,6 @@ public class MenuActivity extends ActionBarActivity {
             case R.id.action_filtro:
                 openFiltro();
                 return true;
-            case R.id.action_recurrent:
-                openRecurrents();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -264,11 +268,6 @@ public class MenuActivity extends ActionBarActivity {
     private void openFiltro() {
         Intent intent = new Intent(MenuActivity.this, FiltroActivity.class);
         startActivityForResult(intent, REQUEST_FILTRO);
-    }
-
-    private void openRecurrents() {
-        Intent intent = new Intent(MenuActivity.this, RecurrentActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -301,22 +300,18 @@ public class MenuActivity extends ActionBarActivity {
             case ICON_SETTINGS:
                 menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
                 menu.findItem(R.id.action_filtro).setVisible(false);
-                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
             case ICON_FILTRO:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(!drawerOpen);
-                menu.findItem(R.id.action_recurrent).setVisible(!drawerOpen);
                 break;
             case ICON_NONE:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(false);
-                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
             default:
                 menu.findItem(R.id.action_settings).setVisible(false);
                 menu.findItem(R.id.action_filtro).setVisible(false);
-                menu.findItem(R.id.action_recurrent).setVisible(false);
                 break;
         }
         return super.onPrepareOptionsMenu(menu);

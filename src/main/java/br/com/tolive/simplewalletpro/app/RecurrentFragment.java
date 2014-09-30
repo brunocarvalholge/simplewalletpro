@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -21,13 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.adapter.EditCategoriesExpListAdapter;
 import br.com.tolive.simplewalletpro.adapter.RecurrentExpListAdapter;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.utils.DialogAddEntryMaker;
 import br.com.tolive.simplewalletpro.utils.RecurrentsManager;
 
-public class RecurrentActivity extends Activity {
+public class RecurrentFragment extends Fragment {
     public static final int EXPANDAPLE_LIST_HEADER_SIZE = 50;
     public static final int EXPANDAPLE_LIST_CHILD_SIZE = 40;
 
@@ -39,11 +41,12 @@ public class RecurrentActivity extends Activity {
     private Entry selectedEntry;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recurrent);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.activity_recurrent, container, false);
 
-        listCurrents = (ExpandableListView) findViewById(R.id.activity_recurrent_list);
+        listCurrents = (ExpandableListView) view.findViewById(R.id.activity_recurrent_list);
 
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<Entry>>();
@@ -51,12 +54,12 @@ public class RecurrentActivity extends Activity {
         listDataHeader.add(getResources().getString(R.string.activity_recurrent_text_daily));
         listDataHeader.add(getResources().getString(R.string.activity_recurrent_text_monthly));
 
-        RecurrentsManager recurrentsManager = new RecurrentsManager(this);
+        RecurrentsManager recurrentsManager = new RecurrentsManager(getActivity());
 
         listDataChild.put(listDataHeader.get(0), recurrentsManager.getRecurrentDaily());
         listDataChild.put(listDataHeader.get(1), recurrentsManager.getRecurrentMonthly());
 
-        adapter = new RecurrentExpListAdapter(this, listDataHeader, listDataChild);
+        adapter = new RecurrentExpListAdapter(getActivity(), listDataHeader, listDataChild);
 
         registerForContextMenu(listCurrents);
 
@@ -77,7 +80,7 @@ public class RecurrentActivity extends Activity {
 
         final DisplayMetrics metrics;
         metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         /*adapter.setOnUpdateListListener(new EditCategoriesExpListAdapter.OnUpdateListListener() {
             @Override
@@ -86,9 +89,6 @@ public class RecurrentActivity extends Activity {
                 setDailyListHeight(metrics);
             }
         });*/
-
-        listSize = listDataHeader.size()* EXPANDAPLE_LIST_HEADER_SIZE;
-        setDailyListHeight(metrics);
 
         listCurrents.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -108,9 +108,31 @@ public class RecurrentActivity extends Activity {
 
         listCurrents.setAdapter(adapter);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.ic_back);
+        listSize = listDataHeader.size()* EXPANDAPLE_LIST_HEADER_SIZE;
+        setDailyListHeight(metrics);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int size = listDataHeader.size();
+        for(int id = 0; id < size; id++) {
+            if (listCurrents.isGroupExpanded(id)){
+                Log.d("TAG", "expanded tomar no cu porra");
+                listSize += listDataChild.get(listDataHeader.get(id)).size() * EXPANDAPLE_LIST_CHILD_SIZE;
+            } else {
+                Log.d("TAG", "no expanded tomar no cu porra");
+            }
+        }
+
+        setDailyListHeight(metrics);
     }
 
     private void setDailyListHeight(DisplayMetrics metrics) {
@@ -126,35 +148,10 @@ public class RecurrentActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.recurrent, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_recurrent) {
-
-            finish();
-            return true;
-        } else if(item.getItemId() == android.R.id.home){
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        final RecurrentsManager recurrentsManager = new RecurrentsManager(this);
-        final Resources resources = this.getResources();
+        final RecurrentsManager recurrentsManager = new RecurrentsManager(getActivity());
+        final Resources resources = getActivity().getResources();
 
         Log.d("TAG", "ContextMenu");
 
@@ -174,22 +171,22 @@ public class RecurrentActivity extends Activity {
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             final DisplayMetrics metrics;
             metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-            final MenuItem itemEdit = menu.add(this.getResources().getString(R.string.fragment_list_contextmenu_item_edit));
+            final MenuItem itemEdit = menu.add(getActivity().getResources().getString(R.string.fragment_list_contextmenu_item_edit));
             itemEdit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    DialogAddEntryMaker dialogAddEntryMaker = new DialogAddEntryMaker(RecurrentActivity.this);
+                    DialogAddEntryMaker dialogAddEntryMaker = new DialogAddEntryMaker(getActivity());
                     dialogAddEntryMaker.setOnClickOkListener(new DialogAddEntryMaker.OnClickOkListener() {
                         @Override
                         public void onClickOk(Entry entry, int recurrency) {
                             recurrentsManager.edit(entry, recurrency);
                             if(entry.getType() == Entry.TYPE_GAIN) {
-                                Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_edit_sucess_gain), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_gain), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_edit_sucess_expense), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_expense), Toast.LENGTH_SHORT).show();
                             }
                             refresh(groupPosition);
                         }
@@ -201,7 +198,7 @@ public class RecurrentActivity extends Activity {
                 }
             });
 
-            final MenuItem itemDelete = menu.add(this.getResources().getString(R.string.fragment_list_contextmenu_item_delete));
+            final MenuItem itemDelete = menu.add(getActivity().getResources().getString(R.string.fragment_list_contextmenu_item_delete));
             itemDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                 @Override
@@ -209,9 +206,9 @@ public class RecurrentActivity extends Activity {
                     recurrentsManager.remove(selectedEntry);
                     refresh(groupPosition);
                     if(selectedEntry.getType() == Entry.TYPE_GAIN) {
-                        Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_remove_sucess_gain), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_gain), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(RecurrentActivity.this, resources.getString(R.string.activity_recurrent_text_remove_sucess_expense), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_expense), Toast.LENGTH_SHORT).show();
                     }
                     return false;
                 }
@@ -220,7 +217,7 @@ public class RecurrentActivity extends Activity {
     }
 
     private void refresh(int groupPosition) {
-        RecurrentsManager recurrentsManager = new RecurrentsManager(this);
+        RecurrentsManager recurrentsManager = new RecurrentsManager(getActivity());
         if(groupPosition == 0) {
             listDataChild.remove(listDataHeader.get(0));
             listDataChild.put(listDataHeader.get(0), recurrentsManager.getRecurrentDaily());

@@ -118,9 +118,9 @@ public class SettingsActivity extends Activity {
             }
         });
 
+        expnandableListCategories.setAdapter(adapter);
         categoryListSize = listDataHeader.size()* EXPANDAPLE_LIST_HEADER_SIZE;
         setListHeight(metrics);
-        expnandableListCategories.setAdapter(adapter);
 
         expnandableListCategories.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -141,6 +141,24 @@ public class SettingsActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_back);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int size = listDataHeader.size();
+        for(int id = 0; id < size; id++) {
+            if (expnandableListCategories.isGroupExpanded(id)){
+                categoryListSize += listDataChild.get(listDataHeader.get(id)).size() * EXPANDAPLE_LIST_CHILD_SIZE;
+            }
+        }
+
+        setListHeight(metrics);
     }
 
     private void setListHeight(DisplayMetrics metrics) {

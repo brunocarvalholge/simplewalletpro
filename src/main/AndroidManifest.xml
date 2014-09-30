@@ -52,9 +52,15 @@
         </receiver>
 
         <activity
-            android:name=".app.RecurrentActivity"
+            android:name=".app.RecurrentFragment"
             android:label="@string/title_activity_recurrent" >
         </activity>
+
+        <service
+            android:name=".app.AddRecurrentService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

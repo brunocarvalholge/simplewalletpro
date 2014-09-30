@@ -69,10 +69,11 @@ public class AddFragment extends Fragment {
                         long id = dao.insert(entry);
                         if (id != -1) {
                             entry.setId(id);
+                            int month = entry.getMonth();
                             recurrentsManager.insert(entry, recurrency);
                             Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
-                            refreshBackGround(entry.getMonth());
-                            refreshBalanceText(entry.getMonth());
+                            refreshBackGround(month);
+                            refreshBalanceText(month);
                         } else {
                             Toast.makeText(getActivity(), R.string.dialog_add_error, Toast.LENGTH_SHORT).show();
                         }
