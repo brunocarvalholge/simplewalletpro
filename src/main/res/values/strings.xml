@@ -21,7 +21,8 @@
     <string name="dialog_add_radiobutton_recurrent_monthly">Mensal</string>
     <string name="dialog_add_edittext_value">Valor</string>
     <string name="dialog_add_edittext_description">Descrição</string>
-    <string name="dialog_add_text_choose">Programar</string>
+    <string name="dialog_add_text_choose_add">Programar</string>
+    <string name="dialog_add_text_choose_edit">Data</string>
     <string name="dialog_add_text_ok">Ok</string>
     <string name="dialog_add_text_cancel">Cancelar</string>
     <string name="dialog_edit_sucess">Editado com sucesso</string>
@@ -36,6 +37,9 @@
     <string name="fragment_settings_text_color_set_green">Bom $$ :)</string>
     <string name="fragment_settings_text_color_set_yellow">Atenção...</string>
     <string name="fragment_settings_text_color_set_red">Quebrado :(</string>
+    <string name="fragment_settings_text_balance_type">Mostrar saldo</string>
+    <string name="fragment_settings_radio_balance_type_total">Total</string>
+    <string name="fragment_settings_radio_balance_type_month">Mês</string>
     <string name="fragment_settings_contextmenu_item_edit">Editar</string>
     <string name="fragment_settings_contextmenu_item_delete">Deletar</string>
     <string name="fragment_filtro_text_date">Data</string>

@@ -1,5 +1,8 @@
 package br.com.tolive.simplewalletpro.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,9 +19,17 @@ import br.com.tolive.simplewalletpro.model.Entry;
 /**
  * Created by bruno.carvalho on 05/09/2014.
  */
-public class RecentEntriesConverter {
+public class RecentEntriesManager {
     public static final String RECENT = "recent";
     public static final String DESCRIPTION = "description";
+
+    private Context context;
+    private SharedPreferences sharedPreferences;
+
+    public RecentEntriesManager(Context context){
+        this.context = context;
+        this.sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+    }
 
     public static String toJson(HashSet<String> recentEntries) {
         try {
@@ -53,5 +64,17 @@ public class RecentEntriesConverter {
             throw new RuntimeException(e);
         }
         return recentEntries;
+    }
+
+    public HashSet<String> getRecents() {
+        return RecentEntriesManager.fromJson(sharedPreferences.getString(Constants.SP_KEY_RECENT_ENTRIES, Constants.SP_RECENT_ENTRIES_DEFAULT));
+    }
+
+    public void insert(String description) {
+        HashSet<String> recentEntry = RecentEntriesManager.fromJson(sharedPreferences.getString(Constants.SP_KEY_RECENT_ENTRIES, Constants.SP_RECENT_ENTRIES_DEFAULT));
+        recentEntry.add(description);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.SP_KEY_RECENT_ENTRIES, RecentEntriesManager.toJson(recentEntry));
+        editor.apply();
     }
 }

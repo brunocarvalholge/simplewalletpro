@@ -197,7 +197,8 @@ public class MenuActivity extends ActionBarActivity {
                 break;
             case NAV_GRAPH:
                 fragment = new GraphFragment();
-                actionBarIcon = ICON_NONE;
+                mListener = (OnFiltroApplyListener) fragment;
+                actionBarIcon = ICON_FILTRO;
                 break;
             case NAV_STORE:
                 fragment = new StoreFragment();

@@ -56,7 +56,6 @@ public class AddFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
 
         refreshBalanceText(month);
-        refreshBackGround(month);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +71,6 @@ public class AddFragment extends Fragment {
                             int month = entry.getMonth();
                             recurrentsManager.insert(entry, recurrency);
                             Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
-                            refreshBackGround(month);
                             refreshBalanceText(month);
                         } else {
                             Toast.makeText(getActivity(), R.string.dialog_add_error, Toast.LENGTH_SHORT).show();
@@ -94,22 +92,24 @@ public class AddFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH);
         refreshBalanceText(month);
-        refreshBackGround(month);
     }
 
     private void refreshBalanceText(int month) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        int balanceType = sharedPreferences.getInt(Constants.SP_KEY_BALANCE_TYPE, Constants.SP_BALANCE_TYPE_DEFAULT);
+        if (balanceType == Constants.BALANCE_TYPE_TOTAL) {
+            month = EntryDAO.ALL;
+        }
         Float balance = new Float(dao.getMonthBalance(month));
         Float gain = dao.getGain(month);
         Float expense = dao.getExpense(month);
+        refreshBackGround(gain, expense);
         textBalance.setText("Saldo: " + String.format("%.2f", balance));
         textGain.setText("Ganho: " + String.format("%.2f", gain));
         textExpense.setText("Despesa: " + String.format("%.2f", expense));
     }
 
-    private void refreshBackGround(int month){
-
-        Float gain = dao.getGain(month);
-        Float expense = dao.getExpense(month);
+    private void refreshBackGround(Float gain, Float expense){
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);

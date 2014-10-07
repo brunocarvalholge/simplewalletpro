@@ -147,6 +147,57 @@
                 android:textColor="@color/gray"
                 android:layout_gravity="center_vertical"
                 android:textSize="35sp"
+                android:text="@string/fragment_settings_text_balance_type"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/gray"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/fragment_settings_radio_group_balance_type"
+                android:gravity="left">
+
+                <br.com.tolive.simplewalletpro.views.CustomRadioButton
+                    googleads:font="@string/app_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_settings_radio_balance_type_total"
+                    android:id="@+id/fragment_settings_radio_balance_type_total"
+                    android:textSize="30sp"
+                    android:textColor="@color/gray"
+                    android:layout_gravity="left" />
+
+                <br.com.tolive.simplewalletpro.views.CustomRadioButton
+                    googleads:font="@string/app_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fragment_settings_radio_balance_type_month"
+                    android:id="@+id/fragment_settings_radio_balance_type_month"
+                    android:textSize="30sp"
+                    android:checked="true"
+                    android:textColor="@color/gray"
+                    android:layout_gravity="left" />
+
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/snow"
+                />
+
+            <br.com.tolive.simplewalletpro.views.CustomTextView
+                googleads:font="@string/app_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
                 android:text="@string/fragment_settings_text_create_category" />
 
             <View

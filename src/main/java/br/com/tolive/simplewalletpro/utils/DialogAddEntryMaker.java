@@ -16,18 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapterCategory;
+import br.com.tolive.simplewalletpro.app.EntriesListFragmentFragment;
 import br.com.tolive.simplewalletpro.constants.Constants;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
@@ -47,10 +42,9 @@ public class DialogAddEntryMaker {
     private Context context;
     private AlertDialog dialog;
     private int categoryType = Category.TYPE_EXPENSE;
-    private String[] categoriesNames;
     private CustomSpinnerAdapterCategory adapterCategory;
     private HashSet<String> recentEntry;
-    private SharedPreferences sharedPreferences;
+    private RecentEntriesManager recentEntriesManager;
 
     public DialogAddEntryMaker(Context context){
         this.context = context;
@@ -82,7 +76,7 @@ public class DialogAddEntryMaker {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         final EntryDAO dao = EntryDAO.getInstance(context);
         final RecurrentsManager recurrentsManager = new RecurrentsManager(context);
-        sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        recentEntriesManager = new RecentEntriesManager(context);
 
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_add, null);
@@ -100,7 +94,7 @@ public class DialogAddEntryMaker {
         ////
         //Get recent entries saved in SharedPreferences
         ////
-        recentEntry = RecentEntriesConverter.fromJson(sharedPreferences.getString(Constants.SP_KEY_RECENT_ENTRIES, Constants.SP_RECENT_ENTRIES_DEFAULT));
+        recentEntry = recentEntriesManager.getRecents();
         Log.d("TAG", recentEntry.toString());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, new ArrayList<String>(recentEntry));
         editTextDescription.setAdapter(adapter);
@@ -112,7 +106,6 @@ public class DialogAddEntryMaker {
             categoryType = entry.getType();
         }
         ArrayList<Category> categories = dao.getCategories(categoryType);
-        categoriesNames = getCategoriesNames(categories);
 
         adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categories);
         adapterCategory.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
@@ -129,7 +122,6 @@ public class DialogAddEntryMaker {
                 if (categoryType != type) {
                     categoryType = type;
                     ArrayList<Category> categories = dao.getCategories(categoryType);
-                    categoriesNames = getCategoriesNames(categories);
                     adapterCategory = new CustomSpinnerAdapterCategory(context, R.layout.simple_spinner_item, categories);
                     categorySpinner.setAdapter(adapterCategory);
                 }
@@ -138,6 +130,10 @@ public class DialogAddEntryMaker {
 
 
         final LinearLayout containerChooseDate = (LinearLayout) view.findViewById(R.id.dialog_add_container_choose_date);
+        if(entry != null){
+            CustomTextView textChooseDate = (CustomTextView) view.findViewById(R.id.dialog_add_text_choose);
+            textChooseDate.setText(context.getResources().getString(R.string.dialog_add_text_choose_edit));
+        }
 
         final DatePicker datePicker = (DatePicker) view.findViewById(R.id.dialog_add_datepicker);
         final RadioGroup radioGroupRecurrent = (RadioGroup) view.findViewById(R.id.dialog_add_radiogroup_recurrent);
@@ -149,7 +145,9 @@ public class DialogAddEntryMaker {
             @Override
             public void onClick(View view) {
                 datePicker.setVisibility(View.VISIBLE);
-                radioGroupRecurrent.setVisibility(View.VISIBLE);
+                if(entry == null) {
+                    radioGroupRecurrent.setVisibility(View.VISIBLE);
+                }
                 containerChooseDate.setVisibility(View.GONE);
             }
         });
@@ -226,10 +224,7 @@ public class DialogAddEntryMaker {
                         editTextDescription.setText(R.string.dialog_add_no_descripition);
                     }
 
-                    recentEntry.add(description);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(Constants.SP_KEY_RECENT_ENTRIES, RecentEntriesConverter.toJson(recentEntry));
-                    editor.apply();
+                    recentEntriesManager.insert(description);
 
                     if(entry == null) {
                         Entry newEntry = new Entry();

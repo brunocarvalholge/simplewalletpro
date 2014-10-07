@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ContextMenu;
@@ -15,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.utils.DialogAddCategoryMaker;
+import br.com.tolive.simplewalletpro.views.CustomRadioButton;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 
@@ -41,6 +42,9 @@ public class SettingsActivity extends Activity {
     private EditText editYellow;
     private EditText editRed;
     private CustomTextView textPercentGreen;
+    private RadioGroup radioGroupBalanceType;
+    private CustomRadioButton radioButtonBalanceTypeTotal;
+    private CustomRadioButton radioButtonBalanceTypeMonth;
     private ExpandableListView expnandableListCategories;
     private List<String> listDataHeader;
     private HashMap<String, List<Category>> listDataChild;
@@ -64,6 +68,18 @@ public class SettingsActivity extends Activity {
         textPercentGreen.setText(String.format("+%.0f",yellow));
         editYellow.setText(String.format("%.0f",yellow));
         editRed.setText(String.format("%.0f",red));
+
+        radioGroupBalanceType = (RadioGroup) findViewById(R.id.fragment_settings_radio_group_balance_type);
+        radioButtonBalanceTypeTotal = (CustomRadioButton) findViewById(R.id.fragment_settings_radio_balance_type_total);
+        radioButtonBalanceTypeMonth = (CustomRadioButton) findViewById(R.id.fragment_settings_radio_balance_type_month);
+        int balanceType = sharedPreferences.getInt(Constants.SP_KEY_BALANCE_TYPE, Constants.SP_BALANCE_TYPE_DEFAULT);
+        if(balanceType == Constants.BALANCE_TYPE_MONTH) {
+            radioButtonBalanceTypeMonth.setChecked(true);
+            radioButtonBalanceTypeTotal.setChecked(false);
+        } else if (balanceType == Constants.BALANCE_TYPE_TOTAL) {
+            radioButtonBalanceTypeTotal.setChecked(true);
+            radioButtonBalanceTypeMonth.setChecked(false);
+        }
 
         final EntryDAO dao = EntryDAO.getInstance(this);
         expnandableListCategories = (ExpandableListView) findViewById(R.id.fragment_settings_expnandable_list_categories);
@@ -257,12 +273,25 @@ public class SettingsActivity extends Activity {
             if(editYellow.getText().toString().equals(EMPTY) || editRed.getText().toString().equals(EMPTY)){
                 Toast.makeText(this, ERROR_INVALID_INPUT, Toast.LENGTH_SHORT).show();
             } else {
+                int radioSelectedId = radioGroupBalanceType.getCheckedRadioButtonId();
+                int balanceType = Constants.SP_BALANCE_TYPE_DEFAULT;
+                switch (radioSelectedId){
+                    case R.id.fragment_settings_radio_balance_type_month:
+                        balanceType = Constants.BALANCE_TYPE_MONTH;
+                        break;
+                    case R.id.fragment_settings_radio_balance_type_total:
+                        balanceType = Constants.BALANCE_TYPE_TOTAL;
+                        break;
+                }
+
                 float yellow = Float.valueOf(editYellow.getText().toString());
                 float red = Float.valueOf(editRed.getText().toString());
                // if ((yellow > 0 && yellow < 100) && (yellow > 0 && yellow < 100)) {
                 if (yellow > red) {
                     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    editor.putInt(Constants.SP_KEY_BALANCE_TYPE, balanceType);
 
                     editor.putFloat(Constants.SP_KEY_YELLOW, yellow);
                     editor.putFloat(Constants.SP_KEY_RED, red);

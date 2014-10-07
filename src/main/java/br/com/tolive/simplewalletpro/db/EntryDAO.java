@@ -16,6 +16,8 @@ import br.com.tolive.simplewalletpro.model.Category;
 import br.com.tolive.simplewalletpro.model.Entry;
 
 public class EntryDAO {
+    public static final int ALL = 99;
+
     private static EntryDAO mInstance = null;
     private SQLiteOpenHelper mHelper;
 
@@ -70,10 +72,15 @@ public class EntryDAO {
     }
 
     public ArrayList<Entry> getEntry(int month){
-        String selection = String.format("SELECT * FROM %s WHERE %s = ? ", Entry.ENTITY_NAME, Entry.MONTH);
-        String[] selectionArgs = { String.valueOf(month) };
-
-        return getEntry(selection, selectionArgs);
+        if(month == ALL){
+            String selection = String.format("SELECT * FROM %s", Entry.ENTITY_NAME);
+            String[] selectionArgs = {};
+            return getEntry(selection, selectionArgs);
+        } else {
+            String selection = String.format("SELECT * FROM %s WHERE %s = ? ", Entry.ENTITY_NAME, Entry.MONTH);
+            String[] selectionArgs = {String.valueOf(month)};
+            return getEntry(selection, selectionArgs);
+        }
     }
 
     public ArrayList<Entry> getEntry(String month, String year){

@@ -120,9 +120,9 @@
             android:layout_height="20dp"
             android:textSize="12sp"
             android:textColor="@color/gray"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:id="@+id/dialog_add_text_choose"
-            android:text="@string/dialog_add_text_choose"/>
+            android:text="@string/dialog_add_text_choose_add"/>
 
         <View
             android:layout_width="0dp"

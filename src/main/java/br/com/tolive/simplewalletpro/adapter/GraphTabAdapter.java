@@ -17,12 +17,15 @@ import br.com.tolive.simplewalletpro.model.Category;
 public class GraphTabAdapter extends FragmentStatePagerAdapter {
 
     public static final String BUNDLE_KEY_TAB_TYPE = "type";
+    public static final String BUNDLE_KEY_TAB_MONTH = "month";
 
     private List<Integer> mTypes;
+    private int month;
 
-    public GraphTabAdapter(FragmentManager fm, List<Integer> types) {
+    public GraphTabAdapter(FragmentManager fm, List<Integer> types, int month) {
         super(fm);
         this.mTypes = types;
+        this.month = month;
     }
 
     @Override
@@ -30,6 +33,7 @@ public class GraphTabAdapter extends FragmentStatePagerAdapter {
         Fragment graphTab = new GraphFragmentTab();
         Bundle type = new Bundle();
         type.putInt(BUNDLE_KEY_TAB_TYPE, mTypes.get(pos));
+        type.putInt(BUNDLE_KEY_TAB_MONTH, month);
         graphTab.setArguments(type);
         return graphTab;
     }
