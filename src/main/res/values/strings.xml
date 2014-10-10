@@ -58,6 +58,8 @@
     <string name="fragment_add_button">$</string>
     <string name="fragment_store_text_options">Opções</string>
     <string name="fragment_store_text_email">Email</string>
+    <string name="fragment_store_text_email_subject">[Gastos PRO] Relatorio de gastos</string>
+    <string name="fragment_store_text_email_instructions">Salve o arquivo no SdCard</string>
     <string name="fragment_store_text_sdcard">Celular</string>
     <string name="fragment_store_text_sucess">Gastos salvos no cartão SD</string>
     <string name="fragment_store_text_fail">Erro ao salvar no cartão SD</string>
@@ -66,14 +68,13 @@
     <string name="fragment_recovery_text_sdcard">Celular</string>
     <string name="fragment_recovery_text_sucess">Dados recuperados com sucesso</string>
     <string name="fragment_recovery_text_fail">Erro ao recuperar dados do cartão SD</string>
+    <string name="fragment_recovery_text_choose">Erro: escolha um arquivo para restaurar os dados</string>
     <string name="fragment_graph_text_empty">Sem dados</string>
     <string name="fragment_graph_text_gain">Ganhos</string>
     <string name="fragment_graph_text_expense">Despesas</string>
-    <string name="dialog_email_text_email">Email</string>
-    <string name="dialog_email_text_date_month">Mês</string>
-    <string name="dialog_email_text_date_year">Ano</string>
-    <string name="dialog_email_text_ok">Enviar</string>
-    <string name="dialog_email_text_cancel">Cancelar</string>
+    <string name="dialog_recovery_text">Escolha o arquivo</string>
+    <string name="dialog_recovery_text_ok">Recuperar</string>
+    <string name="dialog_recovery_text_cancel">Cancelar</string>
     <string name="dialog_category_text_cancel">Cancelar</string>
     <string name="dialog_category_text_ok_1">Criar</string>
     <string name="dialog_category_text_ok_2">Modificar</string>

@@ -1,5 +1,6 @@
 package br.com.tolive.simplewalletpro.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Spinner;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapterFile;
@@ -19,11 +21,11 @@ public class DialogRecoveryMaker {
     public static final int SPINNER_SELECTED_DEFAULT = 0;
     public static final String SPINNER_SELECTED_DEFAULT_STRING = "0";
     private OnClickOkListener mListener;
-    private Context context;
-    private File[] fileList;
+    private Activity context;
+    private ArrayList<File> fileList;
     AlertDialog dialog;
 
-    public DialogRecoveryMaker(Context context, File[] fileList){
+    public DialogRecoveryMaker(Activity context, ArrayList<File> fileList){
         this.fileList = fileList;
         this.context = context;
     }
@@ -48,24 +50,24 @@ public class DialogRecoveryMaker {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.dialog_email, null);
+        final View view = inflater.inflate(R.layout.dialog_recovery, null);
 
-        final Spinner spinnerMonth = (Spinner) view.findViewById(R.id.dialog_email_spinner_db);
+        final Spinner spinnerFiles = (Spinner) view.findViewById(R.id.dialog_recovery_spinner_db);
 
-        CustomSpinnerAdapterFile adapterMonth = new CustomSpinnerAdapterFile(context, R.layout.simple_spinner_item, fileList);
-        adapterMonth.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerMonth.setAdapter(adapterMonth);
-        spinnerMonth.setSelection(SPINNER_SELECTED_DEFAULT);
+        CustomSpinnerAdapterFile adapterFiles = new CustomSpinnerAdapterFile(context, R.layout.simple_spinner_item, fileList);
+        adapterFiles.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinnerFiles.setAdapter(adapterFiles);
+        spinnerFiles.setSelection(SPINNER_SELECTED_DEFAULT);
 
-        CustomTextView okButton = (CustomTextView) view.findViewById(R.id.dialog_email_text_ok);
-        CustomTextView cancelButton = (CustomTextView) view.findViewById(R.id.dialog_email_text_cancel);
+        CustomTextView okButton = (CustomTextView) view.findViewById(R.id.dialog_recovery_text_ok);
+        CustomTextView cancelButton = (CustomTextView) view.findViewById(R.id.dialog_recovery_text_cancel);
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(mListener != null){
-                   mListener.onClickOk(spinnerMonth.getSelectedItemPosition());
+                   mListener.onClickOk(spinnerFiles.getSelectedItemPosition());
                 }
 
                 DialogRecoveryMaker.this.dialog.dismiss();
@@ -88,6 +90,6 @@ public class DialogRecoveryMaker {
     }
 
     public interface OnClickOkListener {
-        public void onClickOk(int filename);
+        public void onClickOk(int position);
     }
 }

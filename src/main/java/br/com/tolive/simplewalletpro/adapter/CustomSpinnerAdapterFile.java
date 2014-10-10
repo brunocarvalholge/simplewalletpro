@@ -1,7 +1,9 @@
 package br.com.tolive.simplewalletpro.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import br.com.tolive.simplewalletpro.R;
 
@@ -16,12 +19,12 @@ import br.com.tolive.simplewalletpro.R;
  * Created by bruno.carvalho on 02/07/2014.
  */
 public class CustomSpinnerAdapterFile extends ArrayAdapter<File> {
-    private Context context;
-    private File[] data;
+    private Activity context;
+    private ArrayList<File> data;
     LayoutInflater inflater;
 
     /*************  CustomAdapter Constructor *****************/
-    public CustomSpinnerAdapterFile(Context context, int textViewResourceId, File[] objects) {
+    public CustomSpinnerAdapterFile(Activity context, int textViewResourceId, ArrayList<File> objects) {
         super(context, textViewResourceId, objects);
         /********** Take passed values **********/
         this.context = context;
@@ -48,9 +51,26 @@ public class CustomSpinnerAdapterFile extends ArrayAdapter<File> {
         TextView label        = (TextView) convertView.findViewById(android.R.id.text1);
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/" + context.getResources().getString(R.string.app_font));
         label.setTypeface(tf);
+        label.setTextColor(context.getResources().getColor(R.color.gray));
+        label.setBackgroundColor(context.getResources().getColor(R.color.snow));
+        final DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        label.setTextSize(getDPI(18, metrics));
 
-        label.setText(data[position].getName());
-
+        String name;
+        File file = data.get(position);
+        if(file == null){
+            name = context.getResources().getString(R.string.dialog_recovery_text);
+            label.setText(name);
+        } else {
+            name = file.getName();
+            label.setText(name.substring(0,name.lastIndexOf(".")));
+        }
         return convertView;
+    }
+
+    public static int getDPI(int size, DisplayMetrics metrics){
+        return (size * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
     }
 }

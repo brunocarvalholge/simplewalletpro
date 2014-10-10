@@ -191,9 +191,12 @@ public class RecurrentsManager {
             }
         }
 
-        cal.set(Calendar.HOUR_OF_DAY, 7);
         cal.set(Calendar.HOUR, 7);
+        cal.set(Calendar.HOUR_OF_DAY, 7);
         cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.AM_PM, Calendar.AM);
         Log.d("TESTE", "[RecurrentMa] \ncal seted: " + cal.toString() + "\nrecurrency: " + recurrency);
 
        setAlarm(entry, recurrency, cal);
@@ -209,9 +212,12 @@ public class RecurrentsManager {
                 if(calendar == null) {
                     calendar = Calendar.getInstance();
                     calendar.add(Calendar.DAY_OF_MONTH, 1);
-                    calendar.set(Calendar.HOUR_OF_DAY, 7);
                     calendar.set(Calendar.HOUR, 7);
+                    calendar.set(Calendar.HOUR_OF_DAY, 7);
                     calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+                    calendar.set(Calendar.AM_PM, Calendar.AM);
                 }
                 registerAlarm(entry, recurrency, calendar);
                 Log.d("TESTE", "[RecurrentMa][DAILY] alarm seted, entry: " + entry.toString());
@@ -220,9 +226,12 @@ public class RecurrentsManager {
                 if(calendar == null) {
                     calendar = Calendar.getInstance();
                     calendar.add(Calendar.MONTH, 1);
-                    calendar.set(Calendar.HOUR_OF_DAY, 7);
                     calendar.set(Calendar.HOUR, 7);
+                    calendar.set(Calendar.HOUR_OF_DAY, 7);
                     calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+                    calendar.set(Calendar.AM_PM, Calendar.AM);
                 }
                 registerAlarm(entry, recurrency, calendar);
                 Log.d("TESTE", "[RecurrentMa][MONTHLY] alarm seted, entry: " + entry.toString());
