@@ -6,25 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Spinner;
 
+import java.io.File;
+
 import br.com.tolive.simplewalletpro.R;
-import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapter;
+import br.com.tolive.simplewalletpro.adapter.CustomSpinnerAdapterFile;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 /**
  * Created by bruno.carvalho on 10/07/2014.
  */
-public class DialogEmailMaker {
+public class DialogRecoveryMaker {
     public static final int SPINNER_SELECTED_DEFAULT = 0;
     public static final String SPINNER_SELECTED_DEFAULT_STRING = "0";
     private OnClickOkListener mListener;
     private Context context;
+    private File[] fileList;
     AlertDialog dialog;
 
-    public DialogEmailMaker(Context context){
+    public DialogRecoveryMaker(Context context, File[] fileList){
+        this.fileList = fileList;
         this.context = context;
     }
 
-    public AlertDialog makeMailDialog(){
+    public AlertDialog makeRecoveryDialog(){
         this.dialog = makeCustoMailDialog();
         setDialog(dialog);
         return dialog;
@@ -46,21 +50,12 @@ public class DialogEmailMaker {
         LayoutInflater inflater = (LayoutInflater)   context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_email, null);
 
-        final Spinner spinnerMonth = (Spinner) view.findViewById(R.id.dialog_email_spinner_month);
-        final Spinner spinnerYear = (Spinner) view.findViewById(R.id.dialog_email_spinner_year);
+        final Spinner spinnerMonth = (Spinner) view.findViewById(R.id.dialog_email_spinner_db);
 
-        String[] months = context.getResources().getStringArray(R.array.spinner_email_months);
-        String[] years = context.getResources().getStringArray(R.array.spinner_email_years);
-
-        CustomSpinnerAdapter adapterMonth = new CustomSpinnerAdapter(context, R.layout.simple_spinner_item, months);
+        CustomSpinnerAdapterFile adapterMonth = new CustomSpinnerAdapterFile(context, R.layout.simple_spinner_item, fileList);
         adapterMonth.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinnerMonth.setAdapter(adapterMonth);
         spinnerMonth.setSelection(SPINNER_SELECTED_DEFAULT);
-
-        CustomSpinnerAdapter adapterYear = new CustomSpinnerAdapter(context, R.layout.simple_spinner_item, years);
-        adapterYear.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinnerYear.setAdapter(adapterYear);
-        spinnerYear.setSelection(SPINNER_SELECTED_DEFAULT);
 
         CustomTextView okButton = (CustomTextView) view.findViewById(R.id.dialog_email_text_ok);
         CustomTextView cancelButton = (CustomTextView) view.findViewById(R.id.dialog_email_text_cancel);
@@ -70,21 +65,17 @@ public class DialogEmailMaker {
             public void onClick(View view) {
 
                 if(mListener != null){
-                    if(spinnerYear.getSelectedItemPosition() == SPINNER_SELECTED_DEFAULT){
-                        mListener.onClickOk(String.valueOf(spinnerMonth.getSelectedItemPosition()), SPINNER_SELECTED_DEFAULT_STRING);
-                    } else {
-                        mListener.onClickOk(String.valueOf(spinnerMonth.getSelectedItemPosition()), (String) spinnerYear.getSelectedItem());
-                    }
+                   mListener.onClickOk(spinnerMonth.getSelectedItemPosition());
                 }
 
-                DialogEmailMaker.this.dialog.dismiss();
+                DialogRecoveryMaker.this.dialog.dismiss();
             }
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogEmailMaker.this.dialog.cancel();
+                DialogRecoveryMaker.this.dialog.cancel();
             }
         });
 
@@ -97,6 +88,6 @@ public class DialogEmailMaker {
     }
 
     public interface OnClickOkListener {
-        public void onClickOk(String month, String year);
+        public void onClickOk(int filename);
     }
 }

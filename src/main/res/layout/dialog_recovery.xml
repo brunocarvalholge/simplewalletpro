@@ -22,7 +22,7 @@
             android:text="@string/dialog_email_text_date_month" />
 
         <Spinner
-            android:id="@+id/dialog_email_spinner_month"
+            android:id="@+id/dialog_email_spinner_db"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
@@ -37,32 +37,6 @@
         android:layout_height="2dp"
         android:background="@color/gray"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <br.com.tolive.simplewalletpro.views.CustomTextView
-            app:font="@string/app_font"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:layout_gravity="center_vertical"
-            android:textSize="30sp"
-            android:text="@string/dialog_email_text_date_year" />
-
-        <Spinner
-            android:id="@+id/dialog_email_spinner_year"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
