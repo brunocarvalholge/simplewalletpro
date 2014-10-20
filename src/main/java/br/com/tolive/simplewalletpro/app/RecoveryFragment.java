@@ -68,11 +68,7 @@ public class RecoveryFragment extends Fragment{
                             if (position > 0) {
                                 try {
                                     Log.d("TAG", filesList.get(position).getName());
-                                    /*
-                                    if(filesList.get(position).getName().contains("GP_")){
-                                        //TODO old version compab.
-                                    }
-                                     */
+
                                     JSONObject json = getJson(filesList.get(position));
                                     JSONArray list = json.getJSONArray(EntryConverter.LIST);
                                     JSONArray entries = list.getJSONObject(0).getJSONArray(Entry.ENTITY_NAME);
@@ -85,7 +81,11 @@ public class RecoveryFragment extends Fragment{
                                         entry.setDescription(jEntry.getString(Entry.DESCRIPTION));
                                         entry.setValue(Float.parseFloat(jEntry.getString(Entry.VALUE).replace(',', '.')));
                                         entry.setType(jEntry.getInt(Entry.TYPE));
-                                        entry.setCategory(jEntry.getInt(Entry.CATEGORY));
+                                        if(filesList.get(position).getName().contains("GP_")){
+                                            entry.setCategory(0);
+                                        } else {
+                                            entry.setCategory(jEntry.getInt(Entry.CATEGORY));
+                                        }
                                         entry.setDate(jEntry.getString(Entry.DATE));
                                         entry.setMonth(jEntry.getInt(Entry.MONTH));
 
