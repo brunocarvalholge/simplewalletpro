@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,16 +15,16 @@ import org.json.JSONStringer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.app.AddRecurrentService;
-import br.com.tolive.simplewalletpro.app.MenuActivity;
 import br.com.tolive.simplewalletpro.constants.Constants;
+import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 
 /**
  * Created by bruno.carvalho on 08/09/2014.
  */
 public class RecurrentsManager {
+    public static final int RECURRENT_NONE = -1;
     public static final int RECURRENT_NORMAL = 0;
     public static final int RECURRENT_DAILY = 1;
     public static final int RECURRENT_MONTHY = 2;
@@ -33,6 +32,8 @@ public class RecurrentsManager {
     private static final int ALARM_REPEAT_TIME_DAYLY = (60 * 60 * 24) * 1000;
 
     private static final String KEY_LIST = "list";
+    public static final int NOT_FOUND = -1;
+    public static final int NOT_INSERTED = -1;
 
     private Context context;
     private SharedPreferences sharedPreferences;
@@ -163,31 +164,41 @@ public class RecurrentsManager {
             return ;
         }
 
-        //createAlarm(entry, recurrency);
+        createAlarm(entry, recurrency);
     }
 
     public void createAlarm(Entry entry, int recurrency) {
+        EntryDAO dao = EntryDAO.getInstance(context);
         //getting current time and set to 7:00 AM set an interval
         Calendar cal = Calendar.getInstance();
+        long currentTime = cal.getTimeInMillis();
+
         String entryDate = entry.getDate();
         String[] entryDateArray = entryDate.split("/");
         int currentDay = cal.get(Calendar.DAY_OF_MONTH);
         int currentMonth = cal.get(Calendar.MONTH);
         int currentYear = cal.get(Calendar.YEAR);
 
+        cal.set(Calendar.DAY_OF_MONTH, Integer.valueOf(entryDateArray[0]));
+        cal.set(Calendar.MONTH, Integer.valueOf(entryDateArray[1]) - 1);
+        cal.set(Calendar.YEAR, Integer.valueOf(entryDateArray[2]));
         Log.d("TESTE", "currentDay: " + currentDay + " currentMonth: " + currentMonth + " currentYear: " + currentYear);
-        Log.d("TESTE", "cal.Day: " + entryDateArray[0] + " cal.Month: " + entryDateArray[1] + " cal.Year: " + entryDateArray[2]);
+        Log.d("TESTE", "cal.Day: " + cal.get(Calendar.DAY_OF_MONTH) + " cal.Month: " + cal.get(Calendar.MONTH) + " cal.Year: " + cal.get(Calendar.YEAR));
 
-        if(currentDay == Integer.valueOf(entryDateArray[0]) && currentMonth == (Integer.valueOf(entryDateArray[1]) - 1) && currentYear == Integer.valueOf(entryDateArray[2])) {
+        long inserted = NOT_INSERTED;
+        if(currentDay == cal.get(Calendar.DAY_OF_MONTH) && currentMonth == cal.get(Calendar.MONTH) && currentYear == cal.get(Calendar.YEAR)) {
             Log.d("TESTE", "currentDate == entryDate");
+            //currentDate == entryDate we need to add the entry for today and them set alarm for the future
+            inserted = dao.insert(entry);
             switch (recurrency) {
                 case RECURRENT_DAILY:
-                    //TODO something if user set a past date
                     cal.add(Calendar.DAY_OF_MONTH, 1);
                     break;
                 case RECURRENT_MONTHY:
                     cal.add(Calendar.MONTH, 1);
                     break;
+                default:
+                    return;
             }
         }
 
@@ -197,6 +208,22 @@ public class RecurrentsManager {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         cal.set(Calendar.AM_PM, Calendar.AM);
+
+        long addTime = cal.getTimeInMillis();
+        if(addTime < currentTime){
+            //If its a past date we need to add the entry before we set the alarm
+            //This can produce an issue and not add the entries from the past date to current one :/
+            if(inserted == NOT_INSERTED) {
+                dao.insert(entry);
+            }
+            //Do not need to add service if its a past date
+            //if(recurrency == RECURRENT_NORMAL){
+                Log.d("TESTE", "add past entry and return");
+            //    return;
+            //}
+            //Log.d("TESTE", "add past entry and set alarm");
+        }
+
         Log.d("TESTE", "[RecurrentMa] \ncal seted: " + cal.toString() + "\nrecurrency: " + recurrency);
 
        setAlarm(entry, recurrency, cal);
@@ -208,6 +235,10 @@ public class RecurrentsManager {
 
     public void setAlarm(Entry entry, int recurrency, Calendar calendar){
         switch (recurrency) {
+            case RECURRENT_NORMAL:
+                registerAlarm(entry, recurrency, calendar);
+                Log.d("TESTE", "[RecurrentMa][NORMAL] alarm seted, entry: " + entry.toString());
+                break;
             case RECURRENT_DAILY:
                 if(calendar == null) {
                     calendar = Calendar.getInstance();
@@ -256,8 +287,8 @@ public class RecurrentsManager {
     public void remove(Entry entry){
         int recurrency = RECURRENT_DAILY;
         ArrayList<Entry> recurrentsDaily = getRecurrentDaily();
-        if(recurrentsDaily.contains((Entry) entry)){
-            if(recurrentsDaily.remove((Entry) entry)){
+        if(contains(recurrentsDaily, entry) != NOT_FOUND){
+            if(removeEntry(recurrentsDaily, entry)){
                 saveRecurrentDaily(recurrentsDaily);
                 removeAlarm(entry, recurrency);
                 return;
@@ -267,9 +298,9 @@ public class RecurrentsManager {
         }
 
         ArrayList<Entry> recurrentsMonthly = getRecurrentMonthly();
-        if(recurrentsMonthly.contains((Entry) entry)){
+        if(contains(recurrentsMonthly, entry) != NOT_FOUND){
             recurrency = RECURRENT_MONTHY;
-            if(recurrentsMonthly.remove((Entry) entry)){
+            if(removeEntry(recurrentsMonthly, entry)){
                 saveRecurrentMonthly(recurrentsMonthly);
                 removeAlarm(entry, recurrency);
                 return;
@@ -277,6 +308,28 @@ public class RecurrentsManager {
                 //Should trows an exception, because tried to remove an recurrent entry but its not a recurrent one
             }
         }
+    }
+
+    private boolean removeEntry(ArrayList<Entry> recurrent, Entry entry) {
+        int size = recurrent.size();
+        for(int i = 0; i < size; i++){
+            if(recurrent.get(i).getId().equals(entry.getId())){
+                recurrent.remove(i);
+                if(recurrent.size() < size) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private int contains(ArrayList<Entry> recurrentsDaily, Entry entry) {
+        for(Entry temp : recurrentsDaily){
+            if(temp.getId().equals(entry.getId())){
+                return entry.getId().intValue();
+            }
+        }
+        return NOT_FOUND;
     }
 
     private void removeAlarm(Entry entry, int recurrency) {
@@ -293,8 +346,8 @@ public class RecurrentsManager {
     public void edit(Entry entry, int recurrency){
         if(recurrency == RECURRENT_DAILY) {
             ArrayList<Entry> recurrentsDaily = getRecurrentDaily();
-            int index = recurrentsDaily.indexOf((Entry) entry);
-            if (index != -1) {
+            int index = contains(recurrentsDaily, entry);
+            if (index != NOT_FOUND) {
                 removeAlarm(entry, recurrency);
                 createAlarm(entry, recurrency);
                 recurrentsDaily.set(index, entry);
@@ -304,8 +357,8 @@ public class RecurrentsManager {
 
         else if (recurrency == RECURRENT_MONTHY) {
             ArrayList<Entry> recurrentsMonthly = getRecurrentMonthly();
-            int index = recurrentsMonthly.indexOf((Entry) entry);
-            if (index != -1) {
+            int index = contains(recurrentsMonthly, entry);
+            if (index != NOT_FOUND) {
                 removeAlarm(entry, recurrency);
                 createAlarm(entry, recurrency);
                 recurrentsMonthly.set(index, entry);

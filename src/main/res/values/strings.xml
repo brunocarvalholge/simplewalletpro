@@ -59,7 +59,7 @@
     <string name="fragment_store_text_options">Opções</string>
     <string name="fragment_store_text_email">Email</string>
     <string name="fragment_store_text_email_subject">[Gastos PRO] Relatorio de gastos</string>
-    <string name="fragment_store_text_email_instructions">Salve o arquivo no SdCard</string>
+    <string name="fragment_store_text_email_instructions">Para recuperar salve esse arquivo na pasta "Gastos Simples" do seu celular.</string>
     <string name="fragment_store_text_sdcard">Celular</string>
     <string name="fragment_store_text_sucess">Gastos salvos no cartão SD</string>
     <string name="fragment_store_text_fail">Erro ao salvar no cartão SD</string>
@@ -107,10 +107,10 @@
     <array name="nav_drawer_icons">
         <item>@drawable/ic_add</item>
         <item>@drawable/ic_list</item>
-        <item>@drawable/ic_list</item>
+        <item>@drawable/ic_recurrent</item>
         <item>@drawable/ic_graph</item>
         <item>@drawable/ic_store</item>
-        <item>@drawable/ic_store</item>
+        <item>@drawable/ic_recover</item>
         <item>@drawable/ic_about</item>
     </array>
 

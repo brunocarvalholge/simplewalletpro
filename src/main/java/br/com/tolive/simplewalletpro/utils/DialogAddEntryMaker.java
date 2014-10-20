@@ -197,23 +197,30 @@ public class DialogAddEntryMaker {
                     month = datePicker.getMonth();
                     date = datePicker.getDayOfMonth() + "/" + (month + 1) + "/" + datePicker.getYear();
                 } else {
-                    Calendar calendar = Calendar.getInstance();
-                    month = calendar.get(Calendar.MONTH);
-                    date = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (month + 1) + "/" + calendar.get(Calendar.YEAR);
+                    if(entry == null) {
+                        Calendar calendar = Calendar.getInstance();
+                        month = calendar.get(Calendar.MONTH);
+                        date = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (month + 1) + "/" + calendar.get(Calendar.YEAR);
+                    } else {
+                        month = entry.getMonth();
+                        date = entry.getDate();
+                    }
                 }
 
-                int recurrentChekedRadioButtonId = radioGroupRecurrent.getCheckedRadioButtonId();
-                int recurrency = RecurrentsManager.RECURRENT_NORMAL;
-                switch (recurrentChekedRadioButtonId){
-                    case R.id.dialog_add_radiobutton_recurrent_no:
-                        recurrency = RecurrentsManager.RECURRENT_NORMAL;
-                        break;
-                    case R.id.dialog_add_radiobutton_recurrent_daily:
-                        recurrency = RecurrentsManager.RECURRENT_DAILY;
-                        break;
-                    case R.id.dialog_add_radiobutton_recurrent_monthly:
-                        recurrency = RecurrentsManager.RECURRENT_MONTHY;
-                        break;
+                int recurrency = RecurrentsManager.RECURRENT_NONE;
+                if(radioGroupRecurrent.getVisibility() == View.VISIBLE) {
+                    int recurrentChekedRadioButtonId = radioGroupRecurrent.getCheckedRadioButtonId();
+                    switch (recurrentChekedRadioButtonId) {
+                        case R.id.dialog_add_radiobutton_recurrent_no:
+                            recurrency = RecurrentsManager.RECURRENT_NORMAL;
+                            break;
+                        case R.id.dialog_add_radiobutton_recurrent_daily:
+                            recurrency = RecurrentsManager.RECURRENT_DAILY;
+                            break;
+                        case R.id.dialog_add_radiobutton_recurrent_monthly:
+                            recurrency = RecurrentsManager.RECURRENT_MONTHY;
+                            break;
+                    }
                 }
 
                 if (editTextValue.getText().toString().equals(EMPTY)) {

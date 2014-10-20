@@ -65,14 +65,19 @@ public class AddFragment extends Fragment {
                 dialogAddEntryMaker.setOnClickOkListener(new DialogAddEntryMaker.OnClickOkListener() {
                     @Override
                     public void onClickOk(Entry entry, int recurrency) {
-                        long id = dao.insert(entry);
-                        if (id != -1) {
+                        long id = 0;
+                        if(recurrency == RecurrentsManager.RECURRENT_NONE) {
+                            id = dao.insert(entry);
+                            Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
+                            refreshBalanceText(entry.getMonth());
+                        }
+                        if (id != -1 && recurrency != RecurrentsManager.RECURRENT_NONE) {
                             entry.setId(id);
                             int month = entry.getMonth();
                             recurrentsManager.insert(entry, recurrency);
                             Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
                             refreshBalanceText(month);
-                        } else {
+                        } else if (id == -1){
                             Toast.makeText(getActivity(), R.string.dialog_add_error, Toast.LENGTH_SHORT).show();
                         }
                     }

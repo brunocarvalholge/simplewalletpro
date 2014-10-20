@@ -14,7 +14,7 @@
         android:visibility="invisible"
         android:layout_gravity="center"
         android:contentDescription="@android:string/untitled"
-        android:src="@drawable/ic_back"/>
+        android:src="@drawable/ic_switch_left"/>
         <!--TODO : create images-->
 
     <LinearLayout
@@ -63,7 +63,7 @@
         android:visibility="invisible"
         android:layout_gravity="center"
         android:contentDescription="@android:string/untitled"
-        android:src="@drawable/ic_back"/>
+        android:src="@drawable/ic_switch_right"/>
     <!--TODO : create images-->
 
 </LinearLayout>

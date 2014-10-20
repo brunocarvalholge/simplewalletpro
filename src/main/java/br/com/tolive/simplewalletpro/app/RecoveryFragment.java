@@ -68,6 +68,11 @@ public class RecoveryFragment extends Fragment{
                             if (position > 0) {
                                 try {
                                     Log.d("TAG", filesList.get(position).getName());
+                                    /*
+                                    if(filesList.get(position).getName().contains("GP_")){
+                                        //TODO old version compab.
+                                    }
+                                     */
                                     JSONObject json = getJson(filesList.get(position));
                                     JSONArray list = json.getJSONArray(EntryConverter.LIST);
                                     JSONArray entries = list.getJSONObject(0).getJSONArray(Entry.ENTITY_NAME);
