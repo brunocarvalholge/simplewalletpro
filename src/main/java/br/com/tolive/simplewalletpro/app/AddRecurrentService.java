@@ -36,16 +36,17 @@ public class AddRecurrentService extends Service {
         switch (recurrency){
             case RecurrentsManager.RECURRENT_NORMAL:
                 dao.insert(entry);
-                Log.d("TESTE", "[AddService][NORMAL] \nentry: " + dao.getEntry(8).toString() + "\n recurrency: " + recurrency);
+                Log.d("TESTE", "[AddService][NORMAL] \nentry: " + dao.getEntry(entry.getMonth()).toString() + "\n recurrency: " + recurrency);
+                recurrentsManager.remove(entry);
                 break;
             case RecurrentsManager.RECURRENT_DAILY:
                 dao.insert(entry);
-                Log.d("TESTE", "[AddService][DAILY] \nentry: " + dao.getEntry(8).toString() + "\n recurrency: " + recurrency);
+                Log.d("TESTE", "[AddService][DAILY] \nentry: " + dao.getEntry(entry.getMonth()).toString() + "\n recurrency: " + recurrency);
                 recurrentsManager.setAlarm(entry, recurrency);
                 break;
             case RecurrentsManager.RECURRENT_MONTHY:
                 dao.insert(entry);
-                Log.d("TESTE", "[AddService]{MONTHLY] \nentry: " + dao.getEntry(8).toString() + "\n recurrency: " + recurrency);
+                Log.d("TESTE", "[AddService]{MONTHLY] \nentry: " + dao.getEntry(entry.getMonth()).toString() + "\n recurrency: " + recurrency);
                 recurrentsManager.setAlarm(entry, recurrency);
                 break;
         }

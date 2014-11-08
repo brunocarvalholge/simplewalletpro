@@ -35,10 +35,21 @@ public class RecurrentsManager {
 
     private Context context;
     private SharedPreferences sharedPreferences;
+    private int currentMonth;
 
     public RecurrentsManager(Context context){
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        this.currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+    }
+
+    public ArrayList<Entry> getRecurrentNormal(){
+        String jRecurrentDaily = sharedPreferences.getString(Constants.SP_KEY_RECURRENT_NORMAL, Constants.SP_RECURRENT_NORMAL_DEFAULT);
+        if(jRecurrentDaily.equals(Constants.SP_RECURRENT_NORMAL_DEFAULT)){
+            return new ArrayList<Entry>();
+        } else {
+            return fromJson(jRecurrentDaily);
+        }
     }
 
     public ArrayList<Entry> getRecurrentDaily(){
@@ -57,6 +68,13 @@ public class RecurrentsManager {
         } else {
             return fromJson(jRecurrentMonthly);
         }
+    }
+
+    private void saveRecurrentNormal(ArrayList<Entry> recurrentsNormal){
+        String json = toJson(recurrentsNormal);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.SP_KEY_RECURRENT_NORMAL, json);
+        editor.apply();
     }
 
     private void saveRecurrentDaily(ArrayList<Entry> recurrentsDaily){
@@ -130,7 +148,7 @@ public class RecurrentsManager {
         } else if (isMonthy(entry)){
             return RECURRENT_MONTHY;
         } else{
-         return RECURRENT_NORMAL;
+            return RECURRENT_NORMAL;
         }
     }
 
@@ -145,6 +163,11 @@ public class RecurrentsManager {
     }
 
     public void insert(Entry entry, int recurrency) {
+
+        if(recurrency == RECURRENT_NORMAL){
+            createAlarm(entry, recurrency);
+            return ;
+        }
 
         if(recurrency == RECURRENT_DAILY){
             ArrayList<Entry> recurrentsDaily = getRecurrentDaily();
@@ -234,6 +257,9 @@ public class RecurrentsManager {
     public void setAlarm(Entry entry, int recurrency, Calendar calendar){
         switch (recurrency) {
             case RECURRENT_NORMAL:
+                ArrayList<Entry> recurrentsNormal = getRecurrentNormal();
+                recurrentsNormal.add(entry);
+                saveRecurrentNormal(recurrentsNormal);
                 registerAlarm(entry, recurrency, calendar);
                 Log.d("TESTE", "[RecurrentMa][NORMAL] alarm seted, entry: " + entry.toString());
                 break;
@@ -283,9 +309,21 @@ public class RecurrentsManager {
     }
 
     public void remove(Entry entry){
-        int recurrency = RECURRENT_DAILY;
+        int recurrency = RECURRENT_NORMAL;
+        ArrayList<Entry> recurrentsNormal = getRecurrentNormal();
+        if(contains(recurrentsNormal, entry) != NOT_FOUND){
+            if(removeEntry(recurrentsNormal, entry)){
+                saveRecurrentNormal(recurrentsNormal);
+                removeAlarm(entry, recurrency);
+                return;
+            } else {
+                //Should trows an exception, because tried to remove an recurrent entry but its not a recurrent one
+            }
+        }
+
         ArrayList<Entry> recurrentsDaily = getRecurrentDaily();
         if(contains(recurrentsDaily, entry) != NOT_FOUND){
+            recurrency = RECURRENT_DAILY;
             if(removeEntry(recurrentsDaily, entry)){
                 saveRecurrentDaily(recurrentsDaily);
                 removeAlarm(entry, recurrency);

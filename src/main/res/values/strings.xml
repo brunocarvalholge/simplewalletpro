@@ -85,19 +85,24 @@
     <string name="dialog_edit_categoty_fail">Erro ao editar</string>
     <string name="dialog_add_categoty_sucess">Categoria adicionada</string>
     <string name="dialog_add_categoty_fail">Erro ao adicionar</string>
-    <string name="activity_recurrent_text">Gastos recorrentes</string>
+    <string name="activity_recurrent_text">Gastos programados</string>
+    <string name="activity_recurrent_text_normal">Programado</string>
     <string name="activity_recurrent_text_daily">Diario</string>
     <string name="activity_recurrent_text_monthly">Mensal</string>
     <string name="activity_recurrent_text_edit_sucess_gain">Ganho recorrente editado com sucesso</string>
     <string name="activity_recurrent_text_remove_sucess_gain">Ganho recorrente removido com sucesso</string>
     <string name="activity_recurrent_text_edit_sucess_expense">Gasto recorrente editado com sucesso</string>
     <string name="activity_recurrent_text_remove_sucess_expense">Gasto recorrente removido com sucesso</string>
+    <string name="activity_recurrent_text_edit_sucess_gain_normal">Ganho programado editado com sucesso</string>
+    <string name="activity_recurrent_text_remove_sucess_gain_normal">Ganho programado removido com sucesso</string>
+    <string name="activity_recurrent_text_edit_sucess_expense_normal">Gasto programado editado com sucesso</string>
+    <string name="activity_recurrent_text_remove_sucess_expense_normal">Gasto programado removido com sucesso</string>
     <string name="textView_list_recurrent_name_add">Adicionar</string>
 
     <string-array name="nav_drawer_items">
         <item>Adicionar</item>
         <item>Lista</item>
-        <item>Recorrentes</item>
+        <item>Programado</item>
         <item>Gráficos</item>
         <item>Armazenar</item>
         <item>Recurperar</item>

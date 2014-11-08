@@ -51,13 +51,15 @@ public class RecurrentFragment extends Fragment {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<Entry>>();
 
+        listDataHeader.add(getResources().getString(R.string.activity_recurrent_text_normal));
         listDataHeader.add(getResources().getString(R.string.activity_recurrent_text_daily));
         listDataHeader.add(getResources().getString(R.string.activity_recurrent_text_monthly));
 
         RecurrentsManager recurrentsManager = new RecurrentsManager(getActivity());
 
-        listDataChild.put(listDataHeader.get(0), recurrentsManager.getRecurrentDaily());
-        listDataChild.put(listDataHeader.get(1), recurrentsManager.getRecurrentMonthly());
+        listDataChild.put(listDataHeader.get(0), recurrentsManager.getRecurrentNormal());
+        listDataChild.put(listDataHeader.get(1), recurrentsManager.getRecurrentDaily());
+        listDataChild.put(listDataHeader.get(2), recurrentsManager.getRecurrentMonthly());
 
         adapter = new RecurrentExpListAdapter(getActivity(), listDataHeader, listDataChild);
 
@@ -184,9 +186,17 @@ public class RecurrentFragment extends Fragment {
                         public void onClickOk(Entry entry, int recurrency) {
                             recurrentsManager.edit(entry, recurrency);
                             if(entry.getType() == Entry.TYPE_GAIN) {
-                                Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_gain), Toast.LENGTH_SHORT).show();
+                                if(recurrency == RecurrentsManager.RECURRENT_NORMAL){
+                                    Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_gain_normal), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_gain), Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_expense), Toast.LENGTH_SHORT).show();
+                                if(recurrency == RecurrentsManager.RECURRENT_NORMAL){
+                                    Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_expense_normal), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_edit_sucess_expense), Toast.LENGTH_SHORT).show();
+                                }
                             }
                             refresh(groupPosition);
                         }
@@ -206,9 +216,17 @@ public class RecurrentFragment extends Fragment {
                     recurrentsManager.remove(selectedEntry);
                     refresh(groupPosition);
                     if(selectedEntry.getType() == Entry.TYPE_GAIN) {
-                        Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_gain), Toast.LENGTH_SHORT).show();
+                        if(groupPosition == 0){
+                            Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_gain_normal), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_gain), Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_expense), Toast.LENGTH_SHORT).show();
+                        if(groupPosition == 0){
+                            Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_expense_normal), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), resources.getString(R.string.activity_recurrent_text_remove_sucess_expense), Toast.LENGTH_SHORT).show();
+                        }
                     }
                     return false;
                 }
