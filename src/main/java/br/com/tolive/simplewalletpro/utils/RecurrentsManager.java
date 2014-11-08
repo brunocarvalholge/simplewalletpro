@@ -29,8 +29,6 @@ public class RecurrentsManager {
     public static final int RECURRENT_DAILY = 1;
     public static final int RECURRENT_MONTHY = 2;
 
-    private static final int ALARM_REPEAT_TIME_DAYLY = (60 * 60 * 24) * 1000;
-
     private static final String KEY_LIST = "list";
     public static final int NOT_FOUND = -1;
     public static final int NOT_INSERTED = -1;
@@ -213,9 +211,9 @@ public class RecurrentsManager {
         if(addTime < currentTime){
             //If its a past date we need to add the entry before we set the alarm
             //This can produce an issue and not add the entries from the past date to current one :/
-            if(inserted == NOT_INSERTED) {
-                dao.insert(entry);
-            }
+            //if(inserted == NOT_INSERTED) {
+            //    dao.insert(entry);
+            //}
             //Do not need to add service if its a past date
             //if(recurrency == RECURRENT_NORMAL){
                 Log.d("TESTE", "add past entry and return");

@@ -57,7 +57,16 @@ public class RecoveryFragment extends Fragment{
                     File dir = Environment.getExternalStorageDirectory();
                     //TODO : Option to store more them 1 file
                     File files = new File( dir, Constants.STORE_FOLDER_NAME ) ;
-                    filesList = new ArrayList<File>(Arrays.asList(files.listFiles()));
+
+                    if (!files.exists()) {
+                        files.mkdir();
+                    }
+
+                    if(files == null){
+                        filesList = new ArrayList<File>();
+                    } else {
+                        filesList = new ArrayList<File>(Arrays.asList(files.listFiles()));
+                    }
                     filesList.add(0, null);
                     //File file = new File(dir, Constants.STORE_FOLDER_NAME + "/" + filename);
                     Log.d("TAG",filesList.toString());

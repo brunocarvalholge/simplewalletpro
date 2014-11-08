@@ -34,6 +34,7 @@ public class AddFragment extends Fragment {
     private RecurrentsManager recurrentsManager;
 
     private AlertDialog dialog;
+    private int currentMonth;
 
     public AddFragment(){}
 
@@ -53,9 +54,9 @@ public class AddFragment extends Fragment {
         background = (RelativeLayout) rootView.findViewById(R.id.fragment_add_background);
 
         Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH);
+        currentMonth = calendar.get(Calendar.MONTH);
 
-        refreshBalanceText(month);
+        refreshBalanceText(currentMonth);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +70,9 @@ public class AddFragment extends Fragment {
                         if(recurrency == RecurrentsManager.RECURRENT_NONE) {
                             id = dao.insert(entry);
                             Toast.makeText(getActivity(), R.string.dialog_add_sucess, Toast.LENGTH_SHORT).show();
-                            refreshBalanceText(entry.getMonth());
+                            if(entry.getMonth() == currentMonth) {
+                                refreshBalanceText(currentMonth);
+                            }
                         }
                         if (id != -1 && recurrency != RecurrentsManager.RECURRENT_NONE) {
                             entry.setId(id);
@@ -94,9 +97,7 @@ public class AddFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH);
-        refreshBalanceText(month);
+        refreshBalanceText(currentMonth);
     }
 
     private void refreshBalanceText(int month) {

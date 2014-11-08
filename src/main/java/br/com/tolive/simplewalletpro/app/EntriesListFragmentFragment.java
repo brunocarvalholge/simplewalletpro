@@ -34,6 +34,7 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
     private static final int DATE_YEAR = 2;
     private static final int NO_ROWS_AFFECTED = 0;
     public static final String EXTRA_KEY_ENTRY_DETAILS = "entry_details";
+    public static final double MONTH_WITH_NO_ENTRIES = 0.00;
 
     ArrayList<Entry> entries;
     Entry entry;
@@ -41,6 +42,8 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
     LinearLayout containerBalance;
     ListView entriesList;
     CustomTextView textBalanceNumber;
+    CustomTextView textGainNumber;
+    CustomTextView textExpenseNumber;
     int month;
 
     int prevMonth;
@@ -61,6 +64,8 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         textBalanceNumber = (CustomTextView) view.findViewById(R.id.fragment_list_text_balance_number);
+        textGainNumber = (CustomTextView) view.findViewById(R.id.fragment_list_text_gain_number);
+        textExpenseNumber = (CustomTextView) view.findViewById(R.id.fragment_list_text_expense_number);
         entriesList = (ListView) view.findViewById(R.id.fragment_list_list_entries);
         containerBalance = (LinearLayout) view.findViewById(R.id.fragment_list_container_balance);
 
@@ -99,12 +104,22 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
     }
 
     private void refreshList(ArrayList<Entry> entries) {
+        if(entries.size() == 0){
+            textBalanceNumber.setText(String.format("%.2f", MONTH_WITH_NO_ENTRIES));
+            textGainNumber.setText(String.format("%.2f", (MONTH_WITH_NO_ENTRIES)));
+            textExpenseNumber.setText(String.format("%.2f", (MONTH_WITH_NO_ENTRIES)));
+            getActivity().getActionBar().setIcon(R.drawable.ic_title_red);
+            containerBalance.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
+            return ;
+        }
         EntriesListAdapter adapter = new EntriesListAdapter(entries, getActivity());
         entriesList.setAdapter(adapter);
         Float gain = dao.getGain(month);
         Float expense = dao.getExpense(month);
 
         textBalanceNumber.setText(String.format("%.2f", (gain - expense)));
+        textGainNumber.setText(String.format("%.2f", (gain)));
+        textExpenseNumber.setText(String.format("%.2f", (expense)));
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
         float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);
         float red = sharedPreferences.getFloat(Constants.SP_KEY_RED, Constants.SP_RED_DEFAULT);

@@ -7,7 +7,7 @@
     <string name="title_activity_menu">Gastos PRO</string>
     <string name="action_settings">Settings</string>
     <string name="action_filtro">Filtro</string>
-    <string name="action_recurrent">Recorrente</string>
+    <string name="action_recurrent">Programado</string>
     <string name="action_confirm">Salvar</string>
     <string name="dialog_add_title">Adicionar</string>
     <string name="dialog_add_sucess">Despesa adicionada com sucesso</string>
@@ -55,11 +55,13 @@
     <string name="fragment_list_contextmenu_item_edit">Editar</string>
     <string name="fragment_list_contextmenu_item_delete">Deletar</string>
     <string name="fragment_list_text_balance">Saldo</string>
+    <string name="fragment_list_text_gain">Ganhos</string>
+    <string name="fragment_list_text_expense">Despesa</string>
     <string name="fragment_add_button">$</string>
     <string name="fragment_store_text_options">Opções</string>
     <string name="fragment_store_text_email">Email</string>
     <string name="fragment_store_text_email_subject">[Gastos PRO] Relatorio de gastos</string>
-    <string name="fragment_store_text_email_instructions">Para recuperar salve esse arquivo na pasta "Gastos Simples" do seu celular.</string>
+    <string name="fragment_store_text_email_instructions">Para recuperar salve o arquivo em anexo na pasta "Gastos Simples" do seu celular.</string>
     <string name="fragment_store_text_sdcard">Celular</string>
     <string name="fragment_store_text_sucess">Gastos salvos no cartão SD</string>
     <string name="fragment_store_text_fail">Erro ao salvar no cartão SD</string>
@@ -125,7 +127,7 @@
         <item>Ago</item>
         <item>Set</item>
         <item>Out</item>
-        <item>Nev</item>
+        <item>Nov</item>
         <item>Dez</item>
     </string-array>
     <string-array name="spinner_years">
@@ -151,7 +153,7 @@
         <item>Ago</item>
         <item>Set</item>
         <item>Out</item>
-        <item>Nev</item>
+        <item>Nov</item>
         <item>Dez</item>
     </string-array>
     <string-array name="spinner_email_years">
