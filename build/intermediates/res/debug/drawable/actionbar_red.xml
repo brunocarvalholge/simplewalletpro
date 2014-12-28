@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+<!--     <item android:state_pressed="true" > -->
+<!--     <shape> -->
+<!--       <solid -->
+<!--           android:color="@color/primary" /> -->
+<!--       <corners -->
+<!--           android:radius="6dp" /> -->
+<!--       <padding -->
+<!--           android:left="10dp" -->
+<!--           android:top="5dp" -->
+<!--           android:right="10dp" -->
+<!--           android:bottom="5dp" /> -->
+<!--     </shape> -->
+<!--   </item> -->
+  <item>
+    <shape>
+      <solid
+          android:color="@color/snow"
+		/>
+    </shape>
+  </item>
+</selector>
+<!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/drawable/actionbar_red.xml -->

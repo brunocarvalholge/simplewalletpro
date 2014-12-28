@@ -1,15 +1,12 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Spinner;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +17,7 @@ import br.com.tolive.simplewalletpro.db.EntryDAO;
 import br.com.tolive.simplewalletpro.model.Entry;
 
 
-public class FiltroActivity extends Activity {
+public class FiltroActivity extends ActionBarActivity {
     public static final String EXTRA_KEY_FILTRO_ENTRIES = "entries_filtro";
     Spinner spinnerMonth;
     Spinner spinnerYear;
@@ -50,7 +47,8 @@ public class FiltroActivity extends Activity {
         spinnerYear.setAdapter(adapterYear);
         spinnerYear.setSelection(getYear(calendar.get(Calendar.YEAR), years));
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_back);
     }

@@ -1,0 +1,69 @@
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <ImageView
+        android:id="@+id/fragment_graph_image_switch_rigth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:contentDescription="@android:string/untitled"
+        android:src="@drawable/ic_switch_left"/>
+        <!--TODO : create images-->
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:orientation="vertical"
+        >
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="55"
+            android:textColor="@color/gray"
+            android:gravity="center"
+            android:textSize="35sp"
+            android:text="@string/fragment_graph_text_empty"
+            android:id="@+id/fragment_graph_text_empty"
+            android:visibility="gone"/>
+
+        <br.com.tolive.simplewalletpro.views.GraphView
+            android:id="@+id/fragment_graph_graphview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="55"
+            />
+
+            <ListView
+                android:id="@+id/fragment_graph_list"
+                android:layout_width="match_parent"
+                android:background="@color/snow"
+                android:layout_height="0dp"
+                android:layout_weight="45"
+                android:paddingBottom="5dp"
+                />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/fragment_graph_image_switch_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:contentDescription="@android:string/untitled"
+        android:src="@drawable/ic_switch_right"/>
+    <!--TODO : create images-->
+
+</LinearLayout><!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/layout/fragment_graph_tab.xml -->

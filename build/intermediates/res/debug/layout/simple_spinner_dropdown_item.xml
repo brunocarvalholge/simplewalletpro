@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="@style/spinnerDropDownItemStyle"
+    android:singleLine="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="marquee" /><!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/layout/simple_spinner_dropdown_item.xml -->

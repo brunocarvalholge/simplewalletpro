@@ -1,6 +1,5 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.content.res.TypedArray;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,6 +63,7 @@ public class MenuActivity extends ActionBarActivity {
     private NavDrawerListAdapter adapter;
 
     private OnFiltroApplyListener mListener;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class MenuActivity extends ActionBarActivity {
 
         setActionBarIcon();
 
+        mActionBar = getSupportActionBar();
         mTitle = mDrawerTitle = getTitle();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -112,8 +114,8 @@ public class MenuActivity extends ActionBarActivity {
         mDrawerList.setAdapter(adapter);
 
         // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
@@ -121,13 +123,13 @@ public class MenuActivity extends ActionBarActivity {
                 R.string.app_name // nav drawer close - description for accessibility
         ){
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                mActionBar.setTitle(mTitle);
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                mActionBar.setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
@@ -151,15 +153,16 @@ public class MenuActivity extends ActionBarActivity {
         float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);
         float red = sharedPreferences.getFloat(Constants.SP_KEY_RED, Constants.SP_RED_DEFAULT);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
 
-        if((gain - expense) < red){
-            actionBar.setIcon(R.drawable.ic_title_red);
-        } else if((gain - expense) < yellow){
-            actionBar.setIcon(R.drawable.ic_title_yellow);
-        } else{
-            actionBar.setIcon(R.drawable.ic_title_green);
-        }
+//        if((gain - expense) < red){
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
+//        } else if((gain - expense) < yellow){
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_yellow));
+//        } else{
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_green));
+//        }
     }
 
     /**
@@ -321,7 +324,7 @@ public class MenuActivity extends ActionBarActivity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(mTitle);
     }
 
     /**

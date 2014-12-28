@@ -1,12 +1,13 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -108,7 +109,7 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
             textBalanceNumber.setText(String.format("%.2f", MONTH_WITH_NO_ENTRIES));
             textGainNumber.setText(String.format("%.2f", (MONTH_WITH_NO_ENTRIES)));
             textExpenseNumber.setText(String.format("%.2f", (MONTH_WITH_NO_ENTRIES)));
-            getActivity().getActionBar().setIcon(R.drawable.ic_title_red);
+//            ((ActionBarActivity)getActivity()).getSupportActionBar().setIcon(R.drawable.ic_title_red);
             containerBalance.setBackgroundColor(getActivity().getResources().getColor(R.color.red));
             return ;
         }
@@ -124,17 +125,18 @@ public class EntriesListFragmentFragment extends Fragment implements MenuActivit
         float yellow = sharedPreferences.getFloat(Constants.SP_KEY_YELLOW, Constants.SP_YELLOW_DEFAULT);
         float red = sharedPreferences.getFloat(Constants.SP_KEY_RED, Constants.SP_RED_DEFAULT);
 
-        ActionBar actionBar = getActivity().getActionBar();
+        ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
 
         int color;
         if((gain - expense) < red){
-            actionBar.setIcon(R.drawable.ic_title_red);
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
             color = getActivity().getResources().getColor(R.color.red);
         } else if((gain - expense) < yellow){
-            actionBar.setIcon(R.drawable.ic_title_yellow);
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_yellow));
             color = getActivity().getResources().getColor(R.color.yellow);
         } else{
-            actionBar.setIcon(R.drawable.ic_title_green);
+//            actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_green));
             color = getActivity().getResources().getColor(R.color.green);
         }
         containerBalance.setBackgroundColor(color);

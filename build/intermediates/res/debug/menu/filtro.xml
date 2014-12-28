@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="br.com.tolive.simplewallet.app.FiltroActivity" >
+    
+    <item android:id="@+id/action_filtrar"
+        android:title="@string/action_filtro"
+        android:icon="@drawable/ic_filtro"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+</menu>
+<!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/menu/filtro.xml -->

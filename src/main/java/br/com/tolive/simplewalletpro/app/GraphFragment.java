@@ -1,10 +1,11 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class GraphFragment extends Fragment implements MenuActivity.OnFiltroAppl
 
             @Override
             public void onPageSelected(int i) {
-                ActionBar actionBar = getActivity().getActionBar();
+                ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
                 switch (i) {
                     case Entry.TYPE_GAIN :
                         actionBar.setTitle(getActivity().getResources().getString(R.string.fragment_graph_text_gain));

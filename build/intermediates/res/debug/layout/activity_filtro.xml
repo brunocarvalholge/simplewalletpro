@@ -1,0 +1,106 @@
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/snow"
+    xmlns:googleads="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="vertical">
+
+            <br.com.tolive.simplewalletpro.views.CustomTextView
+                googleads:font="@string/app_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_gravity="center_vertical"
+                android:textSize="35sp"
+                android:text="@string/fragment_filtro_text_date" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/gray"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:text="@string/fragment_filtro_text_date_month" />
+
+                <Spinner
+                    android:id="@+id/fragment_filtro_spinner_month"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <br.com.tolive.simplewalletpro.views.CustomTextView
+                    googleads:font="@string/app_font"
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="30sp"
+                    android:text="@string/fragment_filtro_text_date_year" />
+
+                <Spinner
+                    android:id="@+id/fragment_filtro_spinner_year"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="match_parent"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/layout/activity_filtro.xml -->

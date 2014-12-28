@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="21.0.2" >
+        <source path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.2\assets" />
+    </dataSet>
+    <dataSet config="6.1.71" >
+        <source path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\assets" />
+    </dataSet>
+    <dataSet config="21.0.0" >
+        <source path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\src\main\assets" >
+            <file
+                name="fonts/RobotoCondensed-Bold.ttf"
+                path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\src\main\assets\fonts\RobotoCondensed-Bold.ttf" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Bruno\AndroidStudioProjects\Simple Wallet\Simple Wallet PRO\src\debug\assets" />
+    </dataSet>
+
+</merger>

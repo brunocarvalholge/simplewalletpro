@@ -1,10 +1,10 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.ActionBar;
-import android.app.Activity;
+import android.support.v7.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -32,7 +32,7 @@ import br.com.tolive.simplewalletpro.views.CustomRadioButton;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends ActionBarActivity {
     //private static final String MSG_ERROR_INTERVAL = "Os valores devem estar entre 0 e 99";
     private static final String MSG_ERROR = "O valor amarelo deve ser maior que o vermelho";
     private static final String EMPTY = "";
@@ -154,7 +154,8 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_back);
     }

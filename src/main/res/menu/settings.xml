@@ -1,4 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.tolive.simplewallet.app.SettingsActivity" >
     
@@ -6,5 +7,5 @@
         android:title="@string/action_confirm"
         android:icon="@drawable/ic_save"
         android:orderInCategory="100"
-        android:showAsAction="always" />
+        app:showAsAction="always" />
 </menu>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:padding="5dp"
+    android:background="@color/snow">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--<br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30sp"
+            android:text="@string/dialog_recovery_text" />-->
+
+        <Spinner
+            android:id="@+id/dialog_recovery_spinner_db"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/snow"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/snow">
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_recovery_text_cancel"
+            android:text="@string/dialog_recovery_text_cancel"
+            android:layout_margin="1dp"/>
+
+        <br.com.tolive.simplewalletpro.views.CustomTextView
+            app:font="@string/app_font"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:textSize="20sp"
+            android:textColor="@color/snow"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:id="@+id/dialog_recovery_text_ok"
+            android:text="@string/dialog_recovery_text_ok"
+            android:layout_margin="1dp"/>
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/layout/dialog_recovery.xml -->

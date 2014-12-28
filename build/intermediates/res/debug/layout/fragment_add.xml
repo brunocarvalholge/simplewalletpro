@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_add_background"
+    android:background="@color/snow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <br.com.tolive.simplewalletpro.views.CustomTextView
+        app:font="@string/app_font"
+        android:id="@+id/fragment_add_text_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:textColor="@color/snow"
+        android:layout_alignParentTop="true"
+        android:paddingTop="15dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+
+    <br.com.tolive.simplewalletpro.views.CustomTextView
+        app:font="@string/app_font"
+        android:id="@+id/fragment_add_text_gain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/snow"
+        android:layout_below="@+id/fragment_add_text_balance"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+
+    <br.com.tolive.simplewalletpro.views.CustomTextView
+        app:font="@string/app_font"
+        android:id="@+id/fragment_add_text_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/snow"
+        android:layout_below="@+id/fragment_add_text_gain"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
+
+    <!--<ImageView android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fragment_add_button_add"
+        android:src="@color/gain"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />-->
+
+    <!--<View
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@color/snow"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+
+        />-->
+
+    <ImageView
+        android:id="@+id/fragment_add_button_add"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/button_add_green"
+        android:contentDescription="@android:string/untitled"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        />
+
+    <!--<ImageButton
+        android:id="@+id/fragment_add_button_add"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onFabClicked"
+        />
+        android:elevation="@dimen/button_elevation"
+        android:background="@drawable/fab_ripple"-->
+
+
+</RelativeLayout><!-- From: file:/C:/Users/Bruno/AndroidStudioProjects/Simple%20Wallet/Simple%20Wallet%20PRO/src/main/res/layout/fragment_add.xml -->

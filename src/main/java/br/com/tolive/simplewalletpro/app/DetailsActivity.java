@@ -1,14 +1,11 @@
 package br.com.tolive.simplewalletpro.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import br.com.tolive.simplewalletpro.R;
 import br.com.tolive.simplewalletpro.db.EntryDAO;
@@ -17,7 +14,7 @@ import br.com.tolive.simplewalletpro.model.Entry;
 import br.com.tolive.simplewalletpro.views.CustomTextView;
 
 
-public class DetailsActivity extends Activity {
+public class DetailsActivity extends ActionBarActivity {
     private Entry entry;
 
     @Override
@@ -52,7 +49,8 @@ public class DetailsActivity extends Activity {
             txtCategory.setText(category.getName());
         }
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_red));
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_back);
     }

@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textSize="32sp"
-        android:paddingRight="40dp"
+        android:paddingRight="10dp"
+        android:singleLine="true"
         android:textColor="@color/list_item_title"/>
 
 </LinearLayout>
